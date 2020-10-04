@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: normal;
+}
+
+
+.wrapper {}
+
+.header {
+    position: absolute;
+    width: 100vw;
+    max-width: 100%;
+    top: 6rem;
+
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    &__logo {}
+
+    &__menu {
+        display: flex;
+        width: 440px;
+        margin-bottom: 5px;
+        margin-right: 2px;
+    }
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+
+    &__title {
+        font-size: 3.2rem;
+        line-height: 110%;
+        color: #F1CDB3;
+        letter-spacing: 0.06em;
+        margin-bottom: 10px;
+    }
+
+    &__subtitle {
+        margin-left: 4px;
+        font-size: 1.3rem;
+        line-height: 1.5rem;
+        color: #FFFFFF;
+        letter-spacing: 0.1em;
+    }
+}
+
+.menu {
+
+    &__list {
+
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        list-style: none;
+    }
+
+    &__link {
+        font-size: 1.5rem;
+        line-height: 160%;
+        color: #CDCDCD;
+        text-decoration: none;
+        padding-bottom: 3px;
+
+        &.active {
+            color: #FAFAFA;
+            border-bottom: 3px solid #F1CDB3;
+
+        }
+    }
+}
+
+.start-screen {
+    padding-top: 178px;
+    background: url("/assets/img/noise_transparent@2x.png"),
+        radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
+        #211F20;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+
+    &__content {
+        margin-bottom: 8rem;
+        margin-right: 4.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start
+    }
+
+    &__title {
+        max-width: 310px;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 4.4rem;
+        line-height: 130%;
+        color: #FFFFFF;
+        margin-bottom: 42px;
+    }
+
+    &__text {
+        max-width: 460px;
+        font-size: 1.5rem;
+        line-height: 160%;
+
+        color: #CDCDCD;
+        margin-bottom: 41px;
+    }
+
+    &__button {
+        display: block;
+        background: #F1CDB3;
+        border-radius: 100px;
+        display: flex;
+        padding: 15px 48px;
+    }
+}
+
+.button {
+    text-decoration: none;
+
+    &__text {
+        font-family: Georgia;
+        font-size: 1.7rem;
+        line-height: 130%;
+        letter-spacing: 0.036em;
+        color: #292929;
+    }
+}
