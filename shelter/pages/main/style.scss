@@ -138,8 +138,6 @@ h5 {
     }
 
     &__button {
-        display: block;
-        background: #F1CDB3;
         border-radius: 100px;
         display: flex;
         padding: 15px 48px;
@@ -147,6 +145,8 @@ h5 {
 }
 
 .button {
+    display: block;
+    background: #F1CDB3;
     text-decoration: none;
 
     &__text {
@@ -155,5 +155,161 @@ h5 {
         line-height: 130%;
         letter-spacing: 0.036em;
         color: #292929;
+    }
+}
+
+.about-screen {
+    padding: 80px 0 100px 0;
+    display: flex;
+
+    &__image {
+        margin-right: 12rem;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    &__title {
+        max-width: 370px;
+        font-size: 3.5rem;
+        line-height: 130%;
+        letter-spacing: 0.06em;
+        color: #545454;
+        margin-bottom: 23px;
+    }
+
+    &__text {
+        max-width: 430px;
+        font-size: 1.5rem;
+        line-height: 160%;
+        color: #4C4C4C;
+    }
+
+    &__text-top {
+        margin-bottom: 25px;
+    }
+}
+
+.our-friends {
+    background: #F6F6F6;
+    padding: 79px 0 100px;
+    display: flex;
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    &__title {
+        font-size: 3.5rem;
+        line-height: 130%;
+        letter-spacing: 0.06em;
+        color: #545454;
+        margin-bottom: 60px;
+    }
+
+    &__slider {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 60px;
+    }
+
+    &__button {
+        border-radius: 100px;
+        padding: 15px 45px;
+    }
+
+    &__button-text {
+        font-family: Georgia;
+        font-size: 17px;
+        line-height: 130%;
+        letter-spacing: 0.06em;
+        color: #292929;
+    }
+}
+
+
+.slider {
+    &__body {
+        display: flex;
+        align-items: center;
+    }
+
+    &__card {
+        &_1 {
+            margin-right: 90px;
+        }
+
+        &_2 {
+            margin-right: 90px;
+        }
+    }
+}
+
+.card {
+    background: #FAFAFA;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__image {
+        margin-bottom: 25px;
+    }
+
+    &__name {
+        font-family: Georgia;
+        font-size: 2rem;
+        line-height: 2.3rem;
+        letter-spacing: 0.06em;
+        color: #545454;
+        margin-bottom: 32px;
+    }
+
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 183px;
+        height: 52px;
+        border: 2px solid #F1CDB3;
+        border-radius: 100px;
+        text-decoration: none;
+        padding: 15px;
+    }
+
+    &__button-text {
+        font-family: Georgia;
+        font-size: 1.7rem;
+        line-height: 130%;
+        letter-spacing: 0.06em;
+        color: #292929;
+    }
+}
+
+.arrow {
+    width: 52px;
+    height: 52px;
+    border: 2px solid #F1CDB3;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3px;
+
+    &_left {
+        margin-right: 52px;
+    }
+
+    &_right {
+        transform: rotate(180deg);
+        margin-left: 52px;
     }
 }
