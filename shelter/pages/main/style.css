@@ -45,6 +45,7 @@ h5 {
 .container {
   display: flex;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -78,6 +79,12 @@ h5 {
   color: #CDCDCD;
   text-decoration: none;
   padding-bottom: 3px;
+  transition: all 0.1s ease;
+}
+
+.menu__link:hover {
+  color: #FAFAFA;
+  border-bottom: 3px solid #F1CDB3;
 }
 
 .menu__link.active {
@@ -131,6 +138,11 @@ h5 {
   display: block;
   background: #F1CDB3;
   text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: #FDDCC4;
 }
 
 .button__text {
@@ -146,6 +158,11 @@ h5 {
   display: flex;
 }
 
+.about-screen__body {
+  display: flex;
+  margin: 0 auto;
+}
+
 .about-screen__image {
   margin-right: 12rem;
 }
@@ -157,28 +174,28 @@ h5 {
 }
 
 .about-screen__title {
-  max-width: 370px;
+  max-width: 37rem;
   font-size: 3.5rem;
   line-height: 130%;
   letter-spacing: 0.06em;
   color: #545454;
-  margin-bottom: 23px;
+  margin-bottom: 2.3rem;
 }
 
 .about-screen__text {
-  max-width: 430px;
+  max-width: 43rem;
   font-size: 1.5rem;
   line-height: 160%;
   color: #4C4C4C;
 }
 
 .about-screen__text-top {
-  margin-bottom: 25px;
+  margin-bottom: 2.5rem;
 }
 
 .our-friends {
   background: #F6F6F6;
-  padding: 79px 0 100px;
+  padding: 7.9rem 0 10rem;
   display: flex;
 }
 
@@ -194,7 +211,7 @@ h5 {
   line-height: 130%;
   letter-spacing: 0.06em;
   color: #545454;
-  margin-bottom: 60px;
+  margin-bottom: 6rem;
 }
 
 .our-friends__slider {
@@ -202,12 +219,12 @@ h5 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 60px;
+  margin-bottom: 6rem;
 }
 
 .our-friends__button {
-  border-radius: 100px;
-  padding: 15px 45px;
+  border-radius: 10rem;
+  padding: 1.5rem 4.5rem;
 }
 
 .our-friends__button-text {
@@ -237,6 +254,7 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 .card__image {
@@ -252,6 +270,16 @@ h5 {
   margin-bottom: 32px;
 }
 
+.card:hover {
+  cursor: pointer;
+  transform: translate(0, -10px);
+  box-shadow: 0 10px 18px #777;
+}
+
+.card:hover > .card__button {
+  cursor: pointer;
+}
+
 .card__button {
   display: flex;
   justify-content: center;
@@ -262,6 +290,11 @@ h5 {
   border-radius: 100px;
   text-decoration: none;
   padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.card__button:hover {
+  background: #FDDCC4;
 }
 
 .card__button-text {
@@ -281,6 +314,12 @@ h5 {
   justify-content: center;
   align-items: center;
   margin-bottom: 3px;
+  transition: all 0.3s ease;
+}
+
+.arrow:hover {
+  cursor: pointer;
+  background: #FDDCC4;
 }
 
 .arrow_left {
@@ -290,4 +329,221 @@ h5 {
 .arrow_right {
   transform: rotate(180deg);
   margin-left: 52px;
+}
+
+.help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 100px 100px 100px;
+}
+
+.help__body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.help__title {
+  max-width: 310px;
+  font-size: 3.5rem;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #545454;
+  margin-bottom: 60px;
+}
+
+.help__items-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.help__items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.help__items_top {
+  padding: 0 8.7rem;
+  margin-bottom: 55px;
+}
+
+.help__items_bottom {
+  padding: 0 17.1rem;
+}
+
+.help__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.help__img {
+  margin-bottom: 3rem;
+}
+
+.help__name {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 115%;
+  letter-spacing: 0.06em;
+  color: #545454;
+}
+
+.addition {
+  background: #F6F6F6;
+  padding: 8rem 0 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addition__body {
+  display: flex;
+  justify-content: center;
+  padding: 0 14.2rem;
+}
+
+.addition__img {
+  margin-right: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addition__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.addition__title {
+  max-width: 30rem;
+  font-size: 3.5rem;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  color: #545454;
+  margin-bottom: 2rem;
+}
+
+.addition__hint {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.5rem;
+  line-height: 110%;
+  letter-spacing: 0.06em;
+  color: #545454;
+}
+
+.addition__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+  background: #F1CDB3;
+  border-radius: 9px;
+  margin: 2rem 0;
+}
+
+.addition__card-icon {
+  margin-right: 1.5rem;
+}
+
+.addition__card-number {
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 115%;
+  letter-spacing: 0.06em;
+  color: #545454;
+}
+
+.addition__info {
+  font-family: Arial;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 150%;
+  color: #B2B2B2;
+}
+
+.footer {
+  background: url("/assets/img/noise_transparent@2x.png"), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
+}
+
+.footer__body {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 4rem;
+}
+
+.contacts {
+  padding-top: 1.8rem;
+}
+
+.contacts_left {
+  max-width: 28rem;
+}
+
+.contacts_right {
+  max-width: 30.2rem;
+}
+
+.contacts__title {
+  max-width: 28rem;
+  font-size: 3.5rem;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  color: #FFFFFF;
+}
+
+.contacts__list {
+  list-style: none;
+}
+
+.contacts__item_email {
+  margin-top: 4rem;
+}
+
+.contacts__item_phone {
+  margin-top: 4rem;
+}
+
+.contacts__item_mark-1 {
+  margin-top: 3.4rem;
+}
+
+.contacts__item_mark-2 {
+  margin-top: 3.2rem;
+}
+
+.contacts__link {
+  display: flex;
+  align-items: center;
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 2rem;
+  line-height: 115%;
+  letter-spacing: 0.06em;
+  color: #F1CDB3;
+  text-decoration: none;
+}
+
+.contacts__link:hover > .contacts__icon {
+  transform: scale(1.1);
+}
+
+.contacts__icon {
+  transition: all 0.3s ease;
+  margin-right: 2rem;
 }
