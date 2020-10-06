@@ -375,30 +375,23 @@ h5 {
 
     &__items-container {
         width: 100%;
+        min-height: 28.1rem;
         display: flex;
-        flex-direction: column;
-
-    }
-
-    &__items {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        &_top {
-            padding: 0 8.7rem;
-            margin-bottom: 55px;
-        }
-
-        &_bottom {
-            padding: 0 17.1rem;
-        }
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: space-between;
     }
 
     &__item {
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-right: 12rem;
+
+        &_shampoos,
+        &_sleeping {
+            margin-right: 0;
+        }
     }
 
     &__img {
