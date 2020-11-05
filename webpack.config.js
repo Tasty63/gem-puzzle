@@ -23,17 +23,24 @@ module.exports = {
     ],
     module: {
         rules: [{
-            test: /\.scss$/,
-            use: [{
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        reloadAll: true
+                test: /\.scss$/,
+                use: [{
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            reloadAll: true
+                        },
                     },
-                },
-                'css-loader',
-                'sass-loader'
-            ]
-        }]
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: ['babel-loader', 'eslint-loader']
+            }
+        ]
+
     },
     devServer: {
         port: 3000,

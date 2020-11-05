@@ -1,2 +1,2 @@
-import './js/rainbow.js';
+import './js/rainbow';
 import './scss/style.scss';

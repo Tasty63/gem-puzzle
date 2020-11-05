@@ -1,1 +1,1 @@
-console.log("this is rainbow");
+console.log('this is rainbow');
