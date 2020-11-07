@@ -1,1 +1,78 @@
-body {}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+.puzzle {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    &__menu {
+        width: 100%;
+        max-width: 530px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    &__tiles {
+        display: grid;
+        gap: 10px;
+        padding: 10px;
+        background: #2f2a2a;
+        margin-bottom: 10vh;
+        border-radius: 10px;
+
+        &_4x4 {
+            font-size: 50px;
+            grid-template-columns: repeat(4, 120px);
+            grid-template-rows: repeat(4, 120px);
+        }
+    }
+
+    &__tile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-family: 'Open Sans', sans-serif;
+        background: #3b444d;
+        border: 3px solid #1e2327;
+        font-weight: 600;
+        user-select: none;
+        transition: background-color 0.3s ease;
+        border-radius: 5px;
+
+        &:not(.puzzle__tile_empty):hover {
+            cursor: pointer;
+            background: #45515a;
+        }
+
+        &_empty {
+            opacity: 0;
+        }
+
+    }
+}
+
+.pause {
+    display: block;
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: #eb9902;
+        cursor: pointer;
+    }
+}

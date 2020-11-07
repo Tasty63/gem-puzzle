@@ -2,6 +2,12 @@
     "parser": "babel-eslint",
     "extends": ["airbnb"],
     "rules": {
-        "eol-last": ["error", "never"]
+        "eol-last": ["error", "never"],
+        "indent": [2, 4, { "SwitchCase": 1 }],
+        "linebreak-style": ["error", "windows"]
+    },
+     "env": {
+        "browser": true,
+        "node": true
     }
 }
