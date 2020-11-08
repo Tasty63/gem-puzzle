@@ -4,7 +4,13 @@
     "rules": {
         "eol-last": ["error", "never"],
         "indent": [2, 4, { "SwitchCase": 1 }],
-        "linebreak-style": ["error", "windows"]
+        "linebreak-style": ["error", "windows"],
+        "prefer-destructuring": ["error", {
+            "AssignmentExpression": {
+                "array": false,
+                "object": false
+            }
+        }]
     },
      "env": {
         "browser": true,

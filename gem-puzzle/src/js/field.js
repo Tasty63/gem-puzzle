@@ -3,6 +3,22 @@ class Field {
         this.size = size || 16;
     }
 
+    setEmptyTile(tile) {
+        this.emptyTile = tile;
+    }
+
+    moveTile(event) {
+        const target = event.target;
+        const moveTo = this.emptyTile.style.order;
+        const moveFrom = target.style.order;
+        const orderDifference = Math.abs(moveFrom - moveTo);
+
+        if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
+            target.style.order = moveTo;
+            this.emptyTile.style.order = moveFrom;
+        }
+    }
+
     createField() {
         const puzzleField = document.createElement('div');
         const puzzleMenu = document.createElement('div');
@@ -38,13 +54,16 @@ class Field {
 
         for (let i = 1; i <= this.size; i += 1) {
             const tile = document.createElement('div');
-            tile.className = 'puzzle__tile';
 
+            tile.className = 'puzzle__tile';
+            tile.textContent = i;
+            tile.style.order = i;
             if (i === this.size) {
+                this.setEmptyTile(tile);
                 tile.classList.add('puzzle__tile_empty');
             }
 
-            tile.textContent = i;
+            tile.addEventListener('click', this.moveTile.bind(this));
             puzzleTiles.append(tile);
         }
 
