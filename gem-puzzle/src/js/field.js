@@ -1,21 +1,38 @@
 class Field {
     constructor(size) {
         this.size = size || 16;
+        this.moveExceptions = [];
+        this.arrTiles = [];
     }
 
-    setEmptyTile(tile) {
-        this.emptyTile = tile;
+    isException(orderSum) {
+        return this.moveExceptions.includes(orderSum);
     }
 
+    /// TODO move animation + time/moves
     moveTile(event) {
         const target = event.target;
         const moveTo = this.emptyTile.style.order;
         const moveFrom = target.style.order;
         const orderDifference = Math.abs(moveFrom - moveTo);
+        const orderSum = parseInt(moveFrom, 10) + parseInt(moveTo, 10);
 
         if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
-            target.style.order = moveTo;
-            this.emptyTile.style.order = moveFrom;
+            if (!this.isException(orderSum)) {
+                target.style.order = moveTo;
+                this.emptyTile.style.order = moveFrom;
+            }
+        }
+    }
+
+    shuffleTiles(node) {
+        this.arrTiles = Array.from(node.childNodes);
+
+        for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const tmp = this.arrTiles[i].style.order;
+            this.arrTiles[i].style.order = this.arrTiles[j].style.order;
+            this.arrTiles[j].style.order = tmp;
         }
     }
 
@@ -26,6 +43,10 @@ class Field {
         const moves = document.createElement('div');
         const pause = document.createElement('a');
         const tiles = this.createTiles();
+
+        for (let i = 1; i < Math.sqrt(this.size); i += 1) {
+            this.moveExceptions.push(Math.sqrt(this.size) * 2 * i + 1);
+        }
 
         puzzleField.className = 'puzzle';
         puzzleMenu.className = 'puzzle__menu';
@@ -59,13 +80,15 @@ class Field {
             tile.textContent = i;
             tile.style.order = i;
             if (i === this.size) {
-                this.setEmptyTile(tile);
                 tile.classList.add('puzzle__tile_empty');
+                this.emptyTile = tile;
             }
 
             tile.addEventListener('click', this.moveTile.bind(this));
             puzzleTiles.append(tile);
         }
+
+        this.shuffleTiles(puzzleTiles);
 
         return puzzleTiles;
     }

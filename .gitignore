@@ -1,3 +1,5 @@
+.jsbeautifyrc
+
 # Logs
 logs
 *.log
