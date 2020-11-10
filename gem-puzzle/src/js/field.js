@@ -6,87 +6,6 @@ class Field {
         this.movesAmount = 0;
     }
 
-    isException(orderSum) {
-        return this.moveExceptions.includes(orderSum);
-    }
-
-    checkWin() {
-        const orderToWin = this.arrTiles // изменить алгоритм
-            .map((tile) => tile.style.order)
-            .sort((a, b) => a - b);
-
-        for (let i = 0; i < this.size; i += 1) {
-            if (orderToWin[i] !== this.arrTiles[i].style.order) {
-                return false;
-            }
-        }
-        return true; // CreatePopUp()
-    }
-
-    animateMoving(target) {
-        const targetPosition = [
-            target.getBoundingClientRect().left,
-            target.getBoundingClientRect().top,
-        ];
-
-        const emptyTilePosition = [
-            this.emptyTile.getBoundingClientRect().left,
-            this.emptyTile.getBoundingClientRect().top,
-        ];
-        const deltaX = targetPosition[0] - emptyTilePosition[0];
-        const deltaY = targetPosition[1] - emptyTilePosition[1];
-
-        target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-        target.style.transition = 'transform 0s';
-
-        this.arrTiles.forEach((tile) => {
-            tile.disabled = true;
-        });
-
-        setTimeout(() => {
-            target.style.transform = '';
-            target.style.transition = 'transform 0.3s';
-            this.arrTiles.forEach((tile) => {
-                tile.disabled = false;
-            });
-        }, 0.3);
-    }
-
-    updateMoves() {
-        this.moves.textContent = `Moves ${this.movesAmount += 1}`;
-    }
-
-    /// TODO  time
-    moveTile(event) {
-        const target = event.target;
-
-        const moveTo = this.emptyTile.style.order;
-        const moveFrom = target.style.order;
-        const orderDifference = Math.abs(moveFrom - moveTo);
-        const orderSum = parseInt(moveFrom, 10) + parseInt(moveTo, 10);
-
-        if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
-            if (!this.isException(orderSum)) {
-                this.animateMoving(target);
-                this.emptyTile.style.order = moveFrom;
-                target.style.order = moveTo;
-                this.updateMoves();
-            }
-        }
-        this.checkWin();
-    }
-
-    shuffleTiles(nodeList) {
-        this.arrTiles = Array.from(nodeList.childNodes);
-
-        for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const tmp = this.arrTiles[i].style.order;
-            this.arrTiles[i].style.order = this.arrTiles[j].style.order;
-            this.arrTiles[j].style.order = tmp;
-        }
-    }
-
     createField() {
         const puzzleField = document.createElement('div');
         const puzzleMenu = document.createElement('div');
@@ -145,7 +64,108 @@ class Field {
 
         return puzzleTiles;
     }
+
+    moveTile(event) {
+        const target = event.target;
+
+        const moveTo = this.emptyTile.style.order;
+        const moveFrom = target.style.order;
+        const orderDifference = Math.abs(moveFrom - moveTo);
+        const orderSum = parseInt(moveFrom, 10) + parseInt(moveTo, 10);
+
+        if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
+            if (!this.isException(orderSum)) {
+                this.animateMoving(target);
+                this.emptyTile.style.order = moveFrom;
+                target.style.order = moveTo;
+                this.updateMoves();
+            }
+        }
+        this.checkWin();
+    }
+
+    isException(orderSum) {
+        return this.moveExceptions.includes(orderSum);
+    }
+
+    checkWin() {
+        const orderToWin = this.arrTiles // изменить алгоритм
+            .map((tile) => tile.style.order)
+            .sort((a, b) => a - b);
+
+        for (let i = 0; i < this.size; i += 1) {
+            if (orderToWin[i] !== this.arrTiles[i].style.order) {
+                return false;
+            }
+        }
+        return true; // CreatePopUp()
+    }
+
+    shuffleTiles(nodeList) {
+        this.arrTiles = Array.from(nodeList.childNodes);
+
+        for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const tmp = this.arrTiles[i].style.order;
+            this.arrTiles[i].style.order = this.arrTiles[j].style.order;
+            this.arrTiles[j].style.order = tmp;
+        }
+    }
+
+    animateMoving(target) {
+        const targetPosition = [
+            target.getBoundingClientRect().left,
+            target.getBoundingClientRect().top,
+        ];
+
+        const emptyTilePosition = [
+            this.emptyTile.getBoundingClientRect().left,
+            this.emptyTile.getBoundingClientRect().top,
+        ];
+        const deltaX = targetPosition[0] - emptyTilePosition[0];
+        const deltaY = targetPosition[1] - emptyTilePosition[1];
+
+        target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        target.style.transition = 'transform 0s';
+
+        this.arrTiles.forEach((tile) => {
+            tile.disabled = true;
+        });
+
+        setTimeout(() => {
+            target.style.transform = '';
+            target.style.transition = 'transform 0.3s';
+            this.arrTiles.forEach((tile) => {
+                tile.disabled = false;
+            });
+        }, 0.3);
+    }
+
+    updateMoves() {
+        if (this.movesAmount === 0) {
+            this.initTimer();
+        }
+        this.moves.textContent = `Moves ${this.movesAmount += 1}`;
+    }
+
+    initTimer() {
+        let sec = 0;
+        let min = 0;
+        setInterval(() => {
+            sec = (sec + 1) % 60;
+            if (sec % 60 === 0) {
+                min += 1;
+            }
+            this.time.textContent = `Time ${addZero(min)}:${addZero(sec)}`;
+        }, 1000);
+    }
+
 }
+
+function addZero(n) {
+    return (parseInt(n, 10) < 10 ? '0' : '') + n;
+}
+
 
 const field = new Field();
 
