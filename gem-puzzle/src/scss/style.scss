@@ -46,10 +46,12 @@ body {
         align-items: center;
         color: #fff;
         font-family: 'Open Sans', sans-serif;
+        font-size: inherit;
         background: #3b444d;
         border: 3px solid #1e2327;
         font-weight: 600;
         user-select: none;
+        outline: none;
         transition: background-color 0.3s ease;
         border-radius: 5px;
 

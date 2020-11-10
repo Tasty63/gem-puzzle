@@ -3,15 +3,63 @@ class Field {
         this.size = size || 16;
         this.moveExceptions = [];
         this.arrTiles = [];
+        this.movesAmount = 0;
     }
 
     isException(orderSum) {
         return this.moveExceptions.includes(orderSum);
     }
 
-    /// TODO move animation + time/moves
+    checkWin() {
+        const orderToWin = this.arrTiles // изменить алгоритм
+            .map((tile) => tile.style.order)
+            .sort((a, b) => a - b);
+
+        for (let i = 0; i < this.size; i += 1) {
+            if (orderToWin[i] !== this.arrTiles[i].style.order) {
+                return false;
+            }
+        }
+        return true; // CreatePopUp()
+    }
+
+    animateMoving(target) {
+        const targetPosition = [
+            target.getBoundingClientRect().left,
+            target.getBoundingClientRect().top,
+        ];
+
+        const emptyTilePosition = [
+            this.emptyTile.getBoundingClientRect().left,
+            this.emptyTile.getBoundingClientRect().top,
+        ];
+        const deltaX = targetPosition[0] - emptyTilePosition[0];
+        const deltaY = targetPosition[1] - emptyTilePosition[1];
+
+        target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        target.style.transition = 'transform 0s';
+
+        this.arrTiles.forEach((tile) => {
+            tile.disabled = true;
+        });
+
+        setTimeout(() => {
+            target.style.transform = '';
+            target.style.transition = 'transform 0.3s';
+            this.arrTiles.forEach((tile) => {
+                tile.disabled = false;
+            });
+        }, 0.3);
+    }
+
+    updateMoves() {
+        this.moves.textContent = `Moves ${this.movesAmount += 1}`;
+    }
+
+    /// TODO  time
     moveTile(event) {
         const target = event.target;
+
         const moveTo = this.emptyTile.style.order;
         const moveFrom = target.style.order;
         const orderDifference = Math.abs(moveFrom - moveTo);
@@ -19,14 +67,17 @@ class Field {
 
         if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
             if (!this.isException(orderSum)) {
-                target.style.order = moveTo;
+                this.animateMoving(target);
                 this.emptyTile.style.order = moveFrom;
+                target.style.order = moveTo;
+                this.updateMoves();
             }
         }
+        this.checkWin();
     }
 
-    shuffleTiles(node) {
-        this.arrTiles = Array.from(node.childNodes);
+    shuffleTiles(nodeList) {
+        this.arrTiles = Array.from(nodeList.childNodes);
 
         for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -39,8 +90,8 @@ class Field {
     createField() {
         const puzzleField = document.createElement('div');
         const puzzleMenu = document.createElement('div');
-        const time = document.createElement('div');
-        const moves = document.createElement('div');
+        this.time = document.createElement('div');
+        this.moves = document.createElement('div');
         const pause = document.createElement('a');
         const tiles = this.createTiles();
 
@@ -50,13 +101,15 @@ class Field {
 
         puzzleField.className = 'puzzle';
         puzzleMenu.className = 'puzzle__menu';
-        time.className = 'time';
-        moves.className = 'moves';
+        this.time.className = 'time';
+        this.moves.className = 'moves';
         pause.className = 'pause';
-        //  time.textContent = getTime();
+
+        this.moves.textContent = 'Moves 0';
+        this.time.textContent = 'Time 00:00';
         pause.textContent = 'Pause game';
 
-        puzzleMenu.append(time, moves, pause);
+        puzzleMenu.append(this.time, this.moves, pause);
         puzzleField.append(puzzleMenu, tiles);
         document.body.append(puzzleField);
     }
@@ -74,7 +127,7 @@ class Field {
         }
 
         for (let i = 1; i <= this.size; i += 1) {
-            const tile = document.createElement('div');
+            const tile = document.createElement('button');
 
             tile.className = 'puzzle__tile';
             tile.textContent = i;
