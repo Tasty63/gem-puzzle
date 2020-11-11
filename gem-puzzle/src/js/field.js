@@ -1,11 +1,11 @@
 class Field {
     constructor(size) {
-        this.size = size || 16;
+        this.size = size || 9;
         this.moveExceptions = [];
         this.arrTiles = [];
         this.movesAmount = 0;
     }
-
+    // TODO popUp + drag and drop + restart + upluad gh-page
     createField() {
         const puzzleField = document.createElement('div');
         const puzzleMenu = document.createElement('div');
@@ -18,6 +18,7 @@ class Field {
             this.moveExceptions.push(Math.sqrt(this.size) * 2 * i + 1);
         }
 
+        console.log(this.moveExceptions);
         puzzleField.className = 'puzzle';
         puzzleMenu.className = 'puzzle__menu';
         this.time.className = 'time';
@@ -40,6 +41,9 @@ class Field {
         switch (this.size) {
             case 16:
                 puzzleTiles.classList.add('puzzle__tiles_4x4');
+                break;
+            case 9:
+                puzzleTiles.classList.add('puzzle__tiles_3x3');
                 break;
             default:
                 break;
@@ -67,14 +71,15 @@ class Field {
 
     moveTile(event) {
         const target = event.target;
-
-        const moveTo = this.emptyTile.style.order;
-        const moveFrom = target.style.order;
+        ///поменять через case this.size
+        const moveTo = parseInt(this.emptyTile.style.order, 10);
+        const moveFrom = parseInt(target.style.order, 10);
         const orderDifference = Math.abs(moveFrom - moveTo);
-        const orderSum = parseInt(moveFrom, 10) + parseInt(moveTo, 10);
-
+        const orderSum = moveFrom + moveTo;
         if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
-            if (!this.isException(orderSum)) {
+            if (!this.isException(orderSum) || ((moveTo === 5 || moveFrom === 5) && this
+                    .size ===
+                    9)) {
                 this.animateMoving(target);
                 this.emptyTile.style.order = moveFrom;
                 target.style.order = moveTo;
@@ -159,7 +164,6 @@ class Field {
             this.time.textContent = `Time ${addZero(min)}:${addZero(sec)}`;
         }, 1000);
     }
-
 }
 
 function addZero(n) {

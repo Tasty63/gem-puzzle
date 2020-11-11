@@ -38,6 +38,12 @@ body {
             grid-template-columns: repeat(4, 120px);
             grid-template-rows: repeat(4, 120px);
         }
+
+        &_3x3 {
+            font-size: 80px;
+            grid-template-columns: repeat(3, 164px);
+            grid-template-rows: repeat(3, 164px);
+        }
     }
 
     &__tile {
