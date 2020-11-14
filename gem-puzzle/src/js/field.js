@@ -8,7 +8,7 @@ class Field {
         this.arrTiles = [];
         this.movesAmount = 0;
     }
-    // TODO popUp + drag and drop + restart + upluad gh-page
+    // TODO popUp + restart + upload gh-page
 
     createField() {
         const puzzleField = document.createElement('div');
@@ -56,18 +56,35 @@ class Field {
             tile.className = 'puzzle__tile';
             tile.textContent = i;
             tile.style.order = i;
+            tile.draggable = true;
             if (i === this.size) {
                 tile.classList.add('puzzle__tile_empty');
                 this.emptyTile = tile;
+
+                this.emptyTile.addEventListener('drop', () => this.moveTile(this
+                    .dragStartEvent));
+                this.emptyTile.addEventListener('dragover', (event) => event.preventDefault());
             }
 
             tile.addEventListener('click', this.moveTile.bind(this));
+            tile.addEventListener('dragstart', this.dragStart.bind(this));
+            tile.addEventListener('dragend', () => tile.classList.remove('hide'));
+
             puzzleTiles.append(tile);
         }
 
         this.shuffleTiles(puzzleTiles);
 
         return puzzleTiles;
+    }
+
+    dragStart(event) {
+        const target = event.target;
+        this.dragStartEvent = event;
+
+        setTimeout(() => {
+            target.classList.add('hide');
+        }, 0);
     }
 
     moveTile(event) {
@@ -82,7 +99,9 @@ class Field {
 
         if ((Math.abs(deltaX) === this.tileWidth && deltaY === 0) ||
             (Math.abs(deltaY) === this.tileWidth && deltaX === 0)) {
-            this.animateMoving(target, deltaX, deltaY);
+            if (event.type !== 'dragstart') {
+                this.animateMoving(target, deltaX, deltaY);
+            }
             this.emptyTile.style.order = moveFromOrder;
             target.style.order = moveToOrder;
             this.updateMoves();
@@ -103,12 +122,13 @@ class Field {
         return true; // CreatePopUp()
     }
 
-    shuffleTiles(nodeList) {
-        this.arrTiles = Array.from(nodeList.childNodes);
+    shuffleTiles(tileList) {
+        this.arrTiles = Array.from(tileList.childNodes);
 
         for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             const tmp = this.arrTiles[i].style.order;
+
             this.arrTiles[i].style.order = this.arrTiles[j].style.order;
             this.arrTiles[j].style.order = tmp;
         }
