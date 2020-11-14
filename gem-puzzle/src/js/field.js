@@ -4,7 +4,7 @@ function addZero(n) {
 
 class Field {
     constructor(size) {
-        this.size = size || 9;
+        this.size = size || 16;
         this.arrTiles = [];
         this.movesAmount = 0;
     }
@@ -73,7 +73,8 @@ class Field {
             puzzleTiles.append(tile);
         }
 
-        this.shuffleTiles(puzzleTiles);
+        this.arrTiles = Array.from(puzzleTiles.childNodes);
+        this.shuffleTiles();
 
         return puzzleTiles;
     }
@@ -122,15 +123,30 @@ class Field {
         return true; // CreatePopUp()
     }
 
-    shuffleTiles(tileList) {
-        this.arrTiles = Array.from(tileList.childNodes);
-
+    shuffleTiles() {
         for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             const tmp = this.arrTiles[i].style.order;
 
             this.arrTiles[i].style.order = this.arrTiles[j].style.order;
             this.arrTiles[j].style.order = tmp;
+        }
+
+        const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
+
+        let evenPairs = 0;
+
+        for (let i = 0; i < this.size - 1; i += 1) {
+            for (let j = i + 1; j < this.size - 1; j += 1) {
+                if (parseInt(orderOfTiles[i].textContent, 10) >
+                    parseInt(orderOfTiles[j].textContent, 10)) {
+                    evenPairs += 1;
+                }
+            }
+        }
+
+        if (evenPairs % 2 !== 0) {
+            this.shuffleTiles();
         }
     }
 
