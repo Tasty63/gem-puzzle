@@ -1,11 +1,15 @@
+function addZero(n) {
+    return (parseInt(n, 10) < 10 ? '0' : '') + n;
+}
+
 class Field {
     constructor(size) {
         this.size = size || 9;
-        this.moveExceptions = [];
         this.arrTiles = [];
         this.movesAmount = 0;
     }
     // TODO popUp + drag and drop + restart + upluad gh-page
+
     createField() {
         const puzzleField = document.createElement('div');
         const puzzleMenu = document.createElement('div');
@@ -14,11 +18,6 @@ class Field {
         const pause = document.createElement('a');
         const tiles = this.createTiles();
 
-        for (let i = 1; i < Math.sqrt(this.size); i += 1) {
-            this.moveExceptions.push(Math.sqrt(this.size) * 2 * i + 1);
-        }
-
-        console.log(this.moveExceptions);
         puzzleField.className = 'puzzle';
         puzzleMenu.className = 'puzzle__menu';
         this.time.className = 'time';
@@ -41,9 +40,11 @@ class Field {
         switch (this.size) {
             case 16:
                 puzzleTiles.classList.add('puzzle__tiles_4x4');
+                this.tileWidth = 130;
                 break;
             case 9:
                 puzzleTiles.classList.add('puzzle__tiles_3x3');
+                this.tileWidth = 174;
                 break;
             default:
                 break;
@@ -71,26 +72,22 @@ class Field {
 
     moveTile(event) {
         const target = event.target;
-        ///поменять через case this.size
-        const moveTo = parseInt(this.emptyTile.style.order, 10);
-        const moveFrom = parseInt(target.style.order, 10);
-        const orderDifference = Math.abs(moveFrom - moveTo);
-        const orderSum = moveFrom + moveTo;
-        if (orderDifference === 1 || orderDifference === Math.sqrt(this.size)) {
-            if (!this.isException(orderSum) || ((moveTo === 5 || moveFrom === 5) && this
-                    .size ===
-                    9)) {
-                this.animateMoving(target);
-                this.emptyTile.style.order = moveFrom;
-                target.style.order = moveTo;
-                this.updateMoves();
-            }
+        const moveToOrder = parseInt(this.emptyTile.style.order, 10);
+        const moveFromOrder = parseInt(target.style.order, 10);
+        const deltaX = target.getBoundingClientRect().left -
+            this.emptyTile.getBoundingClientRect().left;
+
+        const deltaY = target.getBoundingClientRect().top -
+            this.emptyTile.getBoundingClientRect().top;
+
+        if ((Math.abs(deltaX) === this.tileWidth && deltaY === 0) ||
+            (Math.abs(deltaY) === this.tileWidth && deltaX === 0)) {
+            this.animateMoving(target, deltaX, deltaY);
+            this.emptyTile.style.order = moveFromOrder;
+            target.style.order = moveToOrder;
+            this.updateMoves();
         }
         this.checkWin();
-    }
-
-    isException(orderSum) {
-        return this.moveExceptions.includes(orderSum);
     }
 
     checkWin() {
@@ -117,19 +114,7 @@ class Field {
         }
     }
 
-    animateMoving(target) {
-        const targetPosition = [
-            target.getBoundingClientRect().left,
-            target.getBoundingClientRect().top,
-        ];
-
-        const emptyTilePosition = [
-            this.emptyTile.getBoundingClientRect().left,
-            this.emptyTile.getBoundingClientRect().top,
-        ];
-        const deltaX = targetPosition[0] - emptyTilePosition[0];
-        const deltaY = targetPosition[1] - emptyTilePosition[1];
-
+    animateMoving(target, deltaX, deltaY) {
         target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
         target.style.transition = 'transform 0s';
 
@@ -143,7 +128,7 @@ class Field {
             this.arrTiles.forEach((tile) => {
                 tile.disabled = false;
             });
-        }, 0.3);
+        }, 0);
     }
 
     updateMoves() {
@@ -165,11 +150,6 @@ class Field {
         }, 1000);
     }
 }
-
-function addZero(n) {
-    return (parseInt(n, 10) < 10 ? '0' : '') + n;
-}
-
 
 const field = new Field();
 

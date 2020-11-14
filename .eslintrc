@@ -11,7 +11,8 @@
                 "array": false,
                 "object": false
             }
-        }]
+        }],
+        "operator-linebreak": [2 , "after"]
     },
      "env": {
         "browser": true,
