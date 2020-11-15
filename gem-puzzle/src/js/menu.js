@@ -44,6 +44,7 @@ export default class Menu {
 
     startNewGame() {
         this.field.shuffleTiles();
+        this.field.swapLast();
         this.menuBar.classList.remove('menuBar_animated');
         this.field.stopTimer();
         this.field.movesAmount = -1;

@@ -133,6 +133,7 @@ export default class Field {
     }
 
     shuffleTiles() {
+
         for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             const tmp = this.arrTiles[i].style.order;
@@ -143,6 +144,18 @@ export default class Field {
 
         if (this.IsUnsolvable()) {
             this.shuffleTiles();
+        }
+    }
+
+    swapLast() {
+        const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
+
+        for (let i = 0; i < orderOfTiles.length - 1; i += 1) {
+            if (orderOfTiles[i].textContent === '16') {
+                const tmp = orderOfTiles[i].style.order;
+                orderOfTiles[i].style.order = orderOfTiles[15].style.order;
+                orderOfTiles[15].style.order = tmp;
+            }
         }
     }
 
