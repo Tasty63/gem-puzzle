@@ -2,35 +2,43 @@ function addZero(n) {
     return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
-class Field {
+export default class Field {
     constructor(size) {
         this.size = size || 16;
         this.arrTiles = [];
         this.movesAmount = 0;
+        this.sec = 0;
+        this.min = 0;
     }
-    // TODO popUp + restart + upload gh-page
+    // TODO popUp + upload gh-page
+
+    get puzzleField() {
+        return this._puzzleField;
+    }
+    set puzzleField(elem) {
+        this._puzzleField = elem;
+    }
 
     createField() {
-        const puzzleField = document.createElement('div');
         const puzzleMenu = document.createElement('div');
+        this.puzzleField = document.createElement('div');
+
         this.time = document.createElement('div');
         this.moves = document.createElement('div');
-        const pause = document.createElement('a');
+
         const tiles = this.createTiles();
 
-        puzzleField.className = 'puzzle';
+        this.puzzleField.className = 'puzzle';
         puzzleMenu.className = 'puzzle__menu';
         this.time.className = 'time';
         this.moves.className = 'moves';
-        pause.className = 'pause';
 
         this.moves.textContent = 'Moves 0';
         this.time.textContent = 'Time 00:00';
-        pause.textContent = 'Pause game';
 
-        puzzleMenu.append(this.time, this.moves, pause);
-        puzzleField.append(puzzleMenu, tiles);
-        document.body.append(puzzleField);
+        puzzleMenu.append(this.time, this.moves);
+        this.puzzleField.append(puzzleMenu, tiles);
+        document.body.append(this.puzzleField);
     }
 
     createTiles() {
@@ -63,7 +71,8 @@ class Field {
 
                 this.emptyTile.addEventListener('drop', () => this.moveTile(this
                     .dragStartEvent));
-                this.emptyTile.addEventListener('dragover', (event) => event.preventDefault());
+                this.emptyTile.addEventListener('dragover', (event) => event
+                    .preventDefault());
             }
 
             tile.addEventListener('click', this.moveTile.bind(this));
@@ -132,22 +141,25 @@ class Field {
             this.arrTiles[j].style.order = tmp;
         }
 
-        const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
+        if (this.IsUnsolvable()) {
+            this.shuffleTiles();
+        }
+    }
 
-        let evenPairs = 0;
+    IsUnsolvable() {
+        const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
+        let numberPairs = 0;
 
         for (let i = 0; i < this.size - 1; i += 1) {
             for (let j = i + 1; j < this.size - 1; j += 1) {
                 if (parseInt(orderOfTiles[i].textContent, 10) >
                     parseInt(orderOfTiles[j].textContent, 10)) {
-                    evenPairs += 1;
+                    numberPairs += 1;
                 }
             }
         }
 
-        if (evenPairs % 2 !== 0) {
-            this.shuffleTiles();
-        }
+        return (numberPairs % 2 !== 0);
     }
 
     animateMoving(target, deltaX, deltaY) {
@@ -175,18 +187,22 @@ class Field {
     }
 
     initTimer() {
-        let sec = 0;
-        let min = 0;
-        setInterval(() => {
-            sec = (sec + 1) % 60;
-            if (sec % 60 === 0) {
-                min += 1;
+        this.timerId = setInterval(() => {
+            this.sec = (this.sec + 1) % 60;
+            if (this.sec % 60 === 0) {
+                this.min += 1;
             }
-            this.time.textContent = `Time ${addZero(min)}:${addZero(sec)}`;
+            this.time.textContent = `Time ${addZero(this.min)}:${addZero(this.sec)}`;
         }, 1000);
     }
+
+    stopTimer() {
+        clearInterval(this.timerId);
+        this.time.textContent = `Time 00:00`;
+    }
+
+    pauseTimer() {
+        clearInterval(this.timerId);
+    }
+
 }
-
-const field = new Field();
-
-field.createField();
