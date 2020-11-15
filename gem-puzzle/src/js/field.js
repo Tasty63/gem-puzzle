@@ -4,17 +4,19 @@ function addZero(n) {
 
 export default class Field {
     constructor(size) {
-        this.size = size || 16;
+        this.size = size || 9;
         this.arrTiles = [];
         this.movesAmount = 0;
         this.sec = 0;
         this.min = 0;
     }
-    // TODO popUp + upload gh-page
+    // TODO  upload gh-page + решить проблему с нерешаемостью
+    //  createdPopup
 
     get puzzleField() {
         return this._puzzleField;
     }
+
     set puzzleField(elem) {
         this._puzzleField = elem;
     }
@@ -77,7 +79,7 @@ export default class Field {
 
             tile.addEventListener('click', this.moveTile.bind(this));
             tile.addEventListener('dragstart', this.dragStart.bind(this));
-            tile.addEventListener('dragend', () => tile.classList.remove('hide'));
+            tile.addEventListener('dragend', () => tile.classList.remove('puzzle__tile_hide'));
 
             puzzleTiles.append(tile);
         }
@@ -93,7 +95,7 @@ export default class Field {
         this.dragStartEvent = event;
 
         setTimeout(() => {
-            target.classList.add('hide');
+            target.classList.add('puzzle__tile_hide');
         }, 0);
     }
 
@@ -120,20 +122,37 @@ export default class Field {
     }
 
     checkWin() {
-        const orderToWin = this.arrTiles // изменить алгоритм
-            .map((tile) => tile.style.order)
-            .sort((a, b) => a - b);
-
         for (let i = 0; i < this.size; i += 1) {
-            if (orderToWin[i] !== this.arrTiles[i].style.order) {
-                return false;
+            if (this.arrTiles[i].textContent !== this.arrTiles[i].style.order) {
+                return;
             }
         }
-        return true; // CreatePopUp()
+        this.createWinPopUp();
+    }
+
+    createWinPopUp() {
+        const popUp = document.createElement('div');
+        const content = `
+            <div class='pop-up__content'>
+                Ура! 
+                <div class='pop-up__time'>
+                   Вы решили головоломку за <span class='time-counter'>${addZero(this.min)}:${addZero(this.sec)}</span> 
+                </div> 
+                <div class='pop-up__moves'>
+                   и <span class='moves-counter'>${this.movesAmount}</span> хода(-ов)
+                </div> 
+            </div>
+        `;
+        popUp.classList.add('pop-up');
+        popUp.insertAdjacentHTML('afterbegin', content);
+
+        document.body.append(popUp);
+        setTimeout(() => {
+            popUp.classList.add('pop-up_visible');
+        }, 0);
     }
 
     shuffleTiles() {
-
         for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             const tmp = this.arrTiles[i].style.order;
@@ -149,12 +168,13 @@ export default class Field {
 
     swapLast() {
         const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
+        const arrLength = orderOfTiles.length - 1;
 
-        for (let i = 0; i < orderOfTiles.length - 1; i += 1) {
-            if (orderOfTiles[i].textContent === '16') {
+        for (let i = 0; i < arrLength; i += 1) {
+            if (orderOfTiles[i].textContent === orderOfTiles.length.toString()) {
                 const tmp = orderOfTiles[i].style.order;
-                orderOfTiles[i].style.order = orderOfTiles[15].style.order;
-                orderOfTiles[15].style.order = tmp;
+                orderOfTiles[i].style.order = orderOfTiles[arrLength].style.order;
+                orderOfTiles[arrLength].style.order = tmp;
             }
         }
     }
@@ -211,11 +231,10 @@ export default class Field {
 
     stopTimer() {
         clearInterval(this.timerId);
-        this.time.textContent = `Time 00:00`;
+        this.time.textContent = 'Time 00:00';
     }
 
     pauseTimer() {
         clearInterval(this.timerId);
     }
-
 }

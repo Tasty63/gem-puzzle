@@ -19,7 +19,7 @@ export default class Menu {
 
         const restartButton = document.createElement('a');
         restartButton.href = '#';
-        restartButton.classList.add('restart')
+        restartButton.classList.add('restart');
         restartButton.textContent = 'New game';
         restartButton.addEventListener('click', this.startNewGame.bind(this));
 
@@ -30,7 +30,6 @@ export default class Menu {
     }
 
     toggleMenu() {
-
         if (this.menuBar.classList.contains('menuBar_animated')) {
             this.field.initTimer();
             this.menuBar.classList.remove('menuBar_animated');
@@ -48,7 +47,6 @@ export default class Menu {
         this.menuBar.classList.remove('menuBar_animated');
         this.field.stopTimer();
         this.field.movesAmount = -1;
-        this.field.updateMoves()
+        this.field.updateMoves();
     }
-
 }

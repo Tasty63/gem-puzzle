@@ -12,7 +12,8 @@
                 "object": false
             }
         }],
-        "operator-linebreak": [2 , "after"]
+        "operator-linebreak": [2 , "after"],
+        "no-underscore-dangle": false
     },
      "env": {
         "browser": true,
