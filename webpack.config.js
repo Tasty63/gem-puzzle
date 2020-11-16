@@ -35,6 +35,10 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(png|jpg|svg)$/,
+                use: ['file-loader']
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader', 'eslint-loader']

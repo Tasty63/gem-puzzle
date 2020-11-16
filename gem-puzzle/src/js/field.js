@@ -21,7 +21,7 @@ export default class Field {
         this.moves = document.createElement('div');
 
         this.audio.src =
-            './gem-puzzle/assets/sounds/moving.mp3'; //  ../assets/sounds/moving.mp3
+            './gem-puzzle/assets/sounds/moving.mp3';
 
         this.audio.muted = JSON.parse(localStorage.getItem('audioMuted'));
 
@@ -82,7 +82,7 @@ export default class Field {
             tile.textContent = i;
             tile.style.order = i;
             tile.style.backgroundImage =
-                `url('/gem-puzzle/assets/images/image${size}x${size}.jpg')`;
+                `url('./gem-puzzle/assets/images/image${size}x${size}.jpg')`;
             tile.style.backgroundSize = '530px 530px';
             tile.style.backgroundPosition = `-${left}px -${top}px`;
             if (!isMobile) {
