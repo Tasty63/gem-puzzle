@@ -1,3 +1,7 @@
+const isMobile =
+    /Mobile|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator
+        .userAgent);
+
 export default class Field {
     constructor(size) {
         this.size = size || 16;
@@ -54,15 +58,15 @@ export default class Field {
                 break;
             case 25:
                 puzzleTiles.classList.add('puzzle__tiles_5x5');
-                this.tileWidth = 104;
+                this.tileWidth = 103;
                 break;
             case 16:
                 puzzleTiles.classList.add('puzzle__tiles_4x4');
-                this.tileWidth = 130;
+                this.tileWidth = 129;
                 break;
             case 9:
                 puzzleTiles.classList.add('puzzle__tiles_3x3');
-                this.tileWidth = 174;
+                this.tileWidth = 172;
                 break;
             default:
                 break;
@@ -70,11 +74,20 @@ export default class Field {
 
         for (let i = 1; i <= this.size; i += 1) {
             const tile = document.createElement('button');
+            const size = Math.sqrt(this.size);
+            const left = this.tileWidth * ((i - 1) % size);
+            const top = this.tileWidth * (Math.floor((i - 1) / size));
 
             tile.className = 'puzzle__tile';
             tile.textContent = i;
             tile.style.order = i;
-            tile.draggable = true;
+            tile.style.backgroundImage =
+                `url('/gem-puzzle/assets/images/image${size}x${size}.jpg')`;
+            tile.style.backgroundSize = '530px 530px';
+            tile.style.backgroundPosition = `-${left}px -${top}px`;
+            if (!isMobile) {
+                tile.draggable = true;
+            }
             if (i === this.size) {
                 tile.classList.add('puzzle__tile_empty');
                 this.emptyTile = tile;
@@ -86,6 +99,7 @@ export default class Field {
             }
 
             tile.addEventListener('click', this.moveTile.bind(this));
+
             tile.addEventListener('dragstart', this.dragStart.bind(this));
             tile.addEventListener('dragend', () => tile.classList.remove('puzzle__tile_hide'));
 
