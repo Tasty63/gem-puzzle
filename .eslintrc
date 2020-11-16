@@ -13,7 +13,7 @@
             }
         }],
         "operator-linebreak": [2 , "after"],
-        "no-underscore-dangle": false
+        "no-underscore-dangle": 0
     },
      "env": {
         "browser": true,

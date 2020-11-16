@@ -4,21 +4,11 @@ function addZero(n) {
 
 export default class Field {
     constructor(size) {
-        this.size = size || 9;
+        this.size = size || 16;
         this.arrTiles = [];
         this.movesAmount = 0;
         this.sec = 0;
         this.min = 0;
-    }
-    // TODO  upload gh-page + решить проблему с нерешаемостью
-    //  createdPopup
-
-    get puzzleField() {
-        return this._puzzleField;
-    }
-
-    set puzzleField(elem) {
-        this._puzzleField = elem;
     }
 
     createField() {
@@ -153,7 +143,7 @@ export default class Field {
     }
 
     shuffleTiles() {
-        for (let i = this.arrTiles.length - 2; i > 0; i -= 1) {
+        for (let i = this.size - 2; i > 0; i -= 1) {
             const j = Math.floor(Math.random() * (i + 1));
             const tmp = this.arrTiles[i].style.order;
 
@@ -167,22 +157,24 @@ export default class Field {
     }
 
     swapLast() {
-        const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
-        const arrLength = orderOfTiles.length - 1;
+        const orderOfTiles = this.arrTiles
+            .slice()
+            .sort((a, b) => a.style.order - b.style.order);
 
-        for (let i = 0; i < arrLength; i += 1) {
+        for (let i = 0; i < this.size - 1; i += 1) {
             if (orderOfTiles[i].textContent === orderOfTiles.length.toString()) {
                 const tmp = orderOfTiles[i].style.order;
-                orderOfTiles[i].style.order = orderOfTiles[arrLength].style.order;
-                orderOfTiles[arrLength].style.order = tmp;
+                orderOfTiles[i].style.order = orderOfTiles[this.size - 1].style.order;
+                orderOfTiles[this.size - 1].style.order = tmp;
             }
         }
     }
 
     IsUnsolvable() {
-        const orderOfTiles = this.arrTiles.sort((a, b) => a.style.order - b.style.order);
+        const orderOfTiles = this.arrTiles
+            .slice()
+            .sort((a, b) => a.style.order - b.style.order);
         let numberPairs = 0;
-
         for (let i = 0; i < this.size - 1; i += 1) {
             for (let j = i + 1; j < this.size - 1; j += 1) {
                 if (parseInt(orderOfTiles[i].textContent, 10) >
