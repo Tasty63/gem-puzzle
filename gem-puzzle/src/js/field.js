@@ -16,7 +16,11 @@ export default class Field {
         this.time = document.createElement('div');
         this.moves = document.createElement('div');
 
-        this.audio.src = '../assets/sounds/moving.mp3';
+        this.audio.src =
+            './gem-puzzle/assets/sounds/moving.mp3'; //  ../assets/sounds/moving.mp3
+
+        this.audio.muted = JSON.parse(localStorage.getItem('audioMuted'));
+
         this.puzzleField.className = 'puzzle';
         this.time.className = 'time';
         this.moves.className = 'moves';
@@ -121,9 +125,9 @@ export default class Field {
             this.emptyTile.style.order = moveFromOrder;
             target.style.order = moveToOrder;
             this.updateMoves();
+            this.audio.currentTime = 0;
+            this.audio.play();
         }
-        this.audio.currentTime = 0;
-        this.audio.play();
         this.checkWin();
     }
 
@@ -277,7 +281,11 @@ export default class Field {
         restartButton.addEventListener('click', startNewGame.bind(null, this, menuBar));
 
         soundButton.classList.add('sound-toggle-btn');
-        soundButton.textContent = 'Sound off';
+
+        soundButton.textContent = JSON.parse(localStorage.getItem('audioMuted')) ?
+            'Sound: off' :
+            'Sound: on';
+
         soundButton.addEventListener('click', this.toggleSound.bind(this, soundButton));
 
         menuBar.append(restartButton, soundButton);
@@ -300,9 +308,9 @@ export default class Field {
 
     toggleSound(soundButton) {
         this.audio.muted = !this.audio.muted;
-        //  localStorage.setItem('audioMuted') = this.audio.muted;
-        soundButton.textContent = soundButton.textContent === 'Sound off' ? 'Sound on' :
-            'Sound off';
+        soundButton.textContent = this.audio.muted ? 'Sound: off' :
+            'Sound: on';
+        localStorage.setItem('audioMuted', JSON.stringify(this.audio.muted));
     }
 }
 
