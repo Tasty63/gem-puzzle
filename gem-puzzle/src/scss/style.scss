@@ -35,6 +35,10 @@ body {
         border-radius: 10px;
         overflow: hidden;
 
+        @media (max-width: 530px) {
+            margin-bottom: 0;
+        }
+
         &_8x8 {
             font-size: 25px;
             gap: 5px;

@@ -16,7 +16,7 @@ export default class Field {
         this.time = document.createElement('div');
         this.moves = document.createElement('div');
 
-        this.audio.src = './gem-puzzle/assets/sounds/moving.mp3';
+        this.audio.src = '../assets/sounds/moving.mp3';
         this.puzzleField.className = 'puzzle';
         this.time.className = 'time';
         this.moves.className = 'moves';
