@@ -1,7 +1,3 @@
-function addZero(n) {
-    return (parseInt(n, 10) < 10 ? '0' : '') + n;
-}
-
 export default class Field {
     constructor(size) {
         this.size = size || 16;
@@ -13,22 +9,24 @@ export default class Field {
 
     createField() {
         const puzzleMenu = document.createElement('div');
-        this.puzzleField = document.createElement('div');
+        const tiles = this.createTiles();
 
+        this.puzzleField = document.createElement('div');
+        this.audio = document.createElement('audio');
         this.time = document.createElement('div');
         this.moves = document.createElement('div');
 
-        const tiles = this.createTiles();
-
+        this.audio.src = '/gem-puzzle/assets/sounds/moving.mp3';
         this.puzzleField.className = 'puzzle';
-        puzzleMenu.className = 'puzzle__menu';
         this.time.className = 'time';
         this.moves.className = 'moves';
+        puzzleMenu.className = 'puzzle__menu';
 
         this.moves.textContent = 'Moves 0';
         this.time.textContent = 'Time 00:00';
 
         puzzleMenu.append(this.time, this.moves);
+        this.createMenu(puzzleMenu, tiles);
         this.puzzleField.append(puzzleMenu, tiles);
         document.body.append(this.puzzleField);
     }
@@ -38,6 +36,22 @@ export default class Field {
         puzzleTiles.className = 'puzzle__tiles';
 
         switch (this.size) {
+            case 64:
+                puzzleTiles.classList.add('puzzle__tiles_8x8');
+                this.tileWidth = 65;
+                break;
+            case 49:
+                puzzleTiles.classList.add('puzzle__tiles_7x7');
+                this.tileWidth = 74;
+                break;
+            case 36:
+                puzzleTiles.classList.add('puzzle__tiles_6x6');
+                this.tileWidth = 86;
+                break;
+            case 25:
+                puzzleTiles.classList.add('puzzle__tiles_5x5');
+                this.tileWidth = 104;
+                break;
             case 16:
                 puzzleTiles.classList.add('puzzle__tiles_4x4');
                 this.tileWidth = 130;
@@ -108,6 +122,8 @@ export default class Field {
             target.style.order = moveToOrder;
             this.updateMoves();
         }
+        this.audio.currentTime = 0;
+        this.audio.play();
         this.checkWin();
     }
 
@@ -118,6 +134,7 @@ export default class Field {
             }
         }
         this.createWinPopUp();
+        this.stopTimer();
     }
 
     createWinPopUp() {
@@ -156,35 +173,35 @@ export default class Field {
         }
     }
 
+    IsUnsolvable() {
+        const orderOfTiles = this.arrTiles
+            .slice()
+            .sort((a, b) => a.style.order - b.style.order);
+        let numberOfPairs = 0;
+        for (let i = 0; i < this.size - 1; i += 1) {
+            for (let j = i + 1; j < this.size - 1; j += 1) {
+                if (parseInt(orderOfTiles[i].textContent, 10) >
+                    parseInt(orderOfTiles[j].textContent, 10)) {
+                    numberOfPairs += 1;
+                }
+            }
+        }
+
+        return (numberOfPairs % 2 !== 0);
+    }
+
     swapLast() {
         const orderOfTiles = this.arrTiles
             .slice()
             .sort((a, b) => a.style.order - b.style.order);
 
         for (let i = 0; i < this.size - 1; i += 1) {
-            if (orderOfTiles[i].textContent === orderOfTiles.length.toString()) {
+            if (orderOfTiles[i].textContent === this.size.toString()) {
                 const tmp = orderOfTiles[i].style.order;
                 orderOfTiles[i].style.order = orderOfTiles[this.size - 1].style.order;
                 orderOfTiles[this.size - 1].style.order = tmp;
             }
         }
-    }
-
-    IsUnsolvable() {
-        const orderOfTiles = this.arrTiles
-            .slice()
-            .sort((a, b) => a.style.order - b.style.order);
-        let numberPairs = 0;
-        for (let i = 0; i < this.size - 1; i += 1) {
-            for (let j = i + 1; j < this.size - 1; j += 1) {
-                if (parseInt(orderOfTiles[i].textContent, 10) >
-                    parseInt(orderOfTiles[j].textContent, 10)) {
-                    numberPairs += 1;
-                }
-            }
-        }
-
-        return (numberPairs % 2 !== 0);
     }
 
     animateMoving(target, deltaX, deltaY) {
@@ -229,4 +246,74 @@ export default class Field {
     pauseTimer() {
         clearInterval(this.timerId);
     }
+
+    createMenu(puzzleMenu, tiles) {
+        const pause = document.createElement('span');
+        const menuBar = document.createElement('div');
+        const restartButton = document.createElement('span');
+        const soundButton = document.createElement('span');
+        const chooseSizeField = `
+        <div class="size-option">
+            <label class="size-option__label">Field size</label>
+            <select class="size-option__select">
+                    <option value="9" class="select-option">3x3</option>
+                    <option value="16" class="select-option">4x4</option>
+                    <option value ="25" class ="select-option">5x5</option>
+                    <option value="36" class="select-option">6x6</option>
+                    <option value="49" class="select-option">7x7</option>
+                    <option value="64" class="select-option">8x8</option>
+            </select>
+        </div>
+        `;
+
+        pause.className = 'pause';
+        pause.textContent = 'Pause game';
+        pause.addEventListener('click', this.toggleMenu.bind(this, menuBar));
+
+        menuBar.classList.add('menuBar');
+
+        restartButton.classList.add('restart');
+        restartButton.textContent = 'New game';
+        restartButton.addEventListener('click', startNewGame.bind(null, this, menuBar));
+
+        soundButton.classList.add('sound-toggle-btn');
+        soundButton.textContent = 'Sound off';
+        soundButton.addEventListener('click', this.toggleSound.bind(this, soundButton));
+
+        menuBar.append(restartButton, soundButton);
+        menuBar.insertAdjacentHTML('beforeend', chooseSizeField);
+        puzzleMenu.append(pause);
+        tiles.append(menuBar);
+    }
+
+    toggleMenu(menuBar) {
+        if (menuBar.classList.contains('menuBar_animated')) {
+            this.initTimer();
+            menuBar.classList.remove('menuBar_animated');
+            menuBar.classList.add('menuBar_animated-reverse');
+        } else {
+            this.pauseTimer();
+            menuBar.classList.remove('menuBar_animated-reverse');
+            menuBar.classList.add('menuBar_animated');
+        }
+    }
+
+    toggleSound(soundButton) {
+        this.audio.muted = !this.audio.muted;
+        //  localStorage.setItem('audioMuted') = this.audio.muted;
+        soundButton.textContent = soundButton.textContent === 'Sound off' ? 'Sound on' :
+            'Sound off';
+    }
+}
+
+function addZero(n) {
+    return (parseInt(n, 10) < 10 ? '0' : '') + n;
+}
+
+function startNewGame(field, menuBar) {
+    const chosenSize = parseInt(document.querySelector('.size-option__select').value, 10);
+    field.puzzleField.remove();
+    const newField = new Field(chosenSize);
+    newField.createField();
+    menuBar.classList.remove('menuBar_animated');
 }

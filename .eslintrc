@@ -13,7 +13,8 @@
             }
         }],
         "operator-linebreak": [2 , "after"],
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "no-use-before-define": 0
     },
      "env": {
         "browser": true,
