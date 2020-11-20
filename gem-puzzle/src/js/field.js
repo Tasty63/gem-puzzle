@@ -125,11 +125,11 @@ export default class Field {
         const target = event.target;
         const moveToOrder = parseInt(this.emptyTile.style.order, 10);
         const moveFromOrder = parseInt(target.style.order, 10);
-        const deltaX = target.getBoundingClientRect().left -
-            this.emptyTile.getBoundingClientRect().left;
+        const deltaX = Math.floor(target.getBoundingClientRect().left) -
+            Math.floor(this.emptyTile.getBoundingClientRect().left);
 
-        const deltaY = target.getBoundingClientRect().top -
-            this.emptyTile.getBoundingClientRect().top;
+        const deltaY = Math.floor(target.getBoundingClientRect().top) -
+            Math.floor(this.emptyTile.getBoundingClientRect().top);
 
         if ((Math.abs(deltaX) === this.tileWidth && deltaY === 0) ||
             (Math.abs(deltaY) === this.tileWidth && deltaX === 0)) {
