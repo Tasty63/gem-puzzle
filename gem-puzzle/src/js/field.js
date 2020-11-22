@@ -1,7 +1,6 @@
 const isMobile =
     /Mobile|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator
         .userAgent);
-
 const size3x3 = 9;
 const size4x4 = 16;
 const size5x5 = 25;
@@ -50,44 +49,20 @@ export default class Field {
         const puzzleTiles = document.createElement('div');
         puzzleTiles.className = 'puzzle__tiles';
 
-        switch (this.size) {
-            case size8x8:
-                puzzleTiles.classList.add('puzzle__tiles_8x8');
-                this.tileWidth = 65;
-                break;
-            case size7x7:
-                puzzleTiles.classList.add('puzzle__tiles_7x7');
-                this.tileWidth = 74;
-                break;
-            case size6x6:
-                puzzleTiles.classList.add('puzzle__tiles_6x6');
-                this.tileWidth = 86;
-                break;
-            case size5x5:
-                puzzleTiles.classList.add('puzzle__tiles_5x5');
-                this.tileWidth = 103;
-                break;
-            case size4x4:
-                puzzleTiles.classList.add('puzzle__tiles_4x4');
-                this.tileWidth = 129;
-                break;
-            case size3x3:
-                puzzleTiles.classList.add('puzzle__tiles_3x3');
-                this.tileWidth = 172;
-                break;
-            default:
-                break;
-        }
+        const setTilesSize = (width, classModifier) => {
+            puzzleTiles.classList.add(classModifier);
+            this.tileWidth = width;
+        };
 
-        for (let i = 1; i <= this.size; i += 1) {
+        for (let tileNum = 1; tileNum <= this.size; tileNum++) {
             const tile = document.createElement('button');
             const size = Math.sqrt(this.size);
-            const left = this.tileWidth * ((i - 1) % size);
-            const top = this.tileWidth * (Math.floor((i - 1) / size));
+            const left = this.tileWidth * ((tileNum - 1) % size);
+            const top = this.tileWidth * (Math.floor((tileNum - 1) / size));
 
             tile.className = 'puzzle__tile';
-            tile.textContent = i;
-            tile.style.order = i;
+            tile.textContent = tileNum;
+            tile.style.order = tileNum;
             tile.style.backgroundImage =
                 `url('./gem-puzzle/assets/images/image${size}x${size}.jpg')`;
             tile.style.backgroundSize = '530px 530px';
@@ -95,7 +70,7 @@ export default class Field {
             if (!isMobile) {
                 tile.draggable = true;
             }
-            if (i === this.size) {
+            if (tileNum === this.size) {
                 tile.classList.add('puzzle__tile_empty');
                 this.emptyTile = tile;
 
@@ -104,12 +79,31 @@ export default class Field {
                 this.emptyTile.addEventListener('dragover', (event) => event
                     .preventDefault());
             }
-
             tile.addEventListener('click', this.moveTile.bind(this));
-
             tile.addEventListener('dragstart', this.dragStart.bind(this));
             tile.addEventListener('dragend', () => tile.classList.remove('puzzle__tile_hide'));
-
+            switch (this.size) {
+                case size8x8:
+                    setTilesSize(65, 'puzzle__tiles_8x8');
+                    break;
+                case size7x7:
+                    setTilesSize(74, 'puzzle__tiles_7x7');
+                    break;
+                case size6x6:
+                    setTilesSize(86, 'puzzle__tiles_6x6');
+                    break;
+                case size5x5:
+                    setTilesSize(103, 'puzzle__tiles_5x5');
+                    break;
+                case size4x4:
+                    setTilesSize(129, 'puzzle__tiles_4x4');
+                    break;
+                case size3x3:
+                    setTilesSize(172, 'puzzle__tiles_3x3');
+                    break;
+                default:
+                    break;
+            }
             puzzleTiles.append(tile);
         }
 
