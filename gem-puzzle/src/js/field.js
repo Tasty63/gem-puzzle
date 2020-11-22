@@ -270,6 +270,7 @@ export default class Field {
         const menuBar = document.createElement('div');
         const restartButton = document.createElement('span');
         const soundButton = document.createElement('span');
+        const closeButton = document.createElement('span');
         const chooseSizeField = `
         <div class="size-option">
             <label class="size-option__label">Field size</label>
@@ -285,25 +286,28 @@ export default class Field {
         `;
 
         pause.className = 'pause';
-        pause.textContent = 'Pause game';
+        pause.textContent = 'Menu';
         pause.addEventListener('click', this.toggleMenu.bind(this, menuBar));
 
         menuBar.classList.add('menuBar');
 
-        restartButton.classList.add('restart');
+        restartButton.classList.add('restart-btn');
         restartButton.textContent = 'New game';
         restartButton.addEventListener('click', startNewGame.bind(null, this, menuBar));
 
         soundButton.classList.add('sound-toggle-btn');
-
         soundButton.textContent = JSON.parse(localStorage.getItem('audioMuted')) ?
             'Sound: off' :
             'Sound: on';
-
         soundButton.addEventListener('click', this.toggleSound.bind(this, soundButton));
+
+        closeButton.classList.add('close-btn');
+        closeButton.textContent = 'Close';
+        closeButton.addEventListener('click', this.toggleMenu.bind(this, menuBar));
 
         menuBar.append(restartButton, soundButton);
         menuBar.insertAdjacentHTML('beforeend', chooseSizeField);
+        menuBar.append(closeButton);
         puzzleMenu.append(pause);
         tiles.append(menuBar);
     }
