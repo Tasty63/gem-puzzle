@@ -2,9 +2,16 @@ const isMobile =
     /Mobile|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator
         .userAgent);
 
+const size3x3 = 9;
+const size4x4 = 16;
+const size5x5 = 25;
+const size6x6 = 36;
+const size7x7 = 49;
+const size8x8 = 64;
+
 export default class Field {
     constructor(size) {
-        this.size = size || 16;
+        this.size = size || size4x4;
         this.arrTiles = [];
         this.movesAmount = 0;
         this.sec = 0;
@@ -44,27 +51,27 @@ export default class Field {
         puzzleTiles.className = 'puzzle__tiles';
 
         switch (this.size) {
-            case 64:
+            case size8x8:
                 puzzleTiles.classList.add('puzzle__tiles_8x8');
                 this.tileWidth = 65;
                 break;
-            case 49:
+            case size7x7:
                 puzzleTiles.classList.add('puzzle__tiles_7x7');
                 this.tileWidth = 74;
                 break;
-            case 36:
+            case size6x6:
                 puzzleTiles.classList.add('puzzle__tiles_6x6');
                 this.tileWidth = 86;
                 break;
-            case 25:
+            case size5x5:
                 puzzleTiles.classList.add('puzzle__tiles_5x5');
                 this.tileWidth = 103;
                 break;
-            case 16:
+            case size4x4:
                 puzzleTiles.classList.add('puzzle__tiles_4x4');
                 this.tileWidth = 129;
                 break;
-            case 9:
+            case size3x3:
                 puzzleTiles.classList.add('puzzle__tiles_3x3');
                 this.tileWidth = 172;
                 break;
@@ -159,6 +166,8 @@ export default class Field {
         const popUp = document.createElement('div');
         const content = `
             <div class='pop-up__content'>
+                <button class='pop-up__close-icon'>
+                </button>
                 Ура! 
                 <div class='pop-up__time'>
                    Вы решили головоломку за <span class='time-counter'>${addZero(this.min)}:${addZero(this.sec)}</span> 
@@ -170,8 +179,12 @@ export default class Field {
         `;
         popUp.classList.add('pop-up');
         popUp.insertAdjacentHTML('afterbegin', content);
-
         document.body.append(popUp);
+        const closeBtn = document.querySelector('.pop-up__close-icon');
+        closeBtn.addEventListener('click', () => {
+            popUp.remove();
+            startNewGame.call(null, this);
+        });
         setTimeout(() => {
             popUp.classList.add('pop-up_visible');
         }, 0);
@@ -341,5 +354,7 @@ function startNewGame(field, menuBar) {
     field.puzzleField.remove();
     const newField = new Field(chosenSize);
     newField.createField();
-    menuBar.classList.remove('menuBar_animated');
+    if (menuBar) {
+        menuBar.classList.remove('menuBar_animated');
+    }
 }
