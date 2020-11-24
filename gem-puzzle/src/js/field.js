@@ -237,7 +237,7 @@ export default class Field {
         if (this.movesAmount === 0) {
             this.initTimer();
         }
-        this.moves.textContent = `Moves ${this.movesAmount += 1}`;
+        this.moves.textContent = `Moves ${++this.movesAmount}`;
     }
 
     initTimer() {
@@ -283,7 +283,7 @@ export default class Field {
         pause.textContent = 'Menu';
         pause.addEventListener('click', this.toggleMenu.bind(this, menuBar));
 
-        menuBar.classList.add('menuBar');
+        menuBar.classList.add('menuBar', 'menuBar_animated-reverse');
 
         restartButton.classList.add('restart-btn');
         restartButton.textContent = 'New game';
@@ -307,15 +307,17 @@ export default class Field {
     }
 
     toggleMenu(menuBar) {
+        this.toggleMenuClass(menuBar);
         if (menuBar.classList.contains('menuBar_animated')) {
             this.initTimer();
-            menuBar.classList.remove('menuBar_animated');
-            menuBar.classList.add('menuBar_animated-reverse');
         } else {
             this.pauseTimer();
-            menuBar.classList.remove('menuBar_animated-reverse');
-            menuBar.classList.add('menuBar_animated');
         }
+    }
+
+    toggleMenuClass(menuBar) {
+        menuBar.classList.toggle('menuBar_animated-reverse');
+        menuBar.classList.toggle('menuBar_animated');
     }
 
     toggleSound(soundButton) {
