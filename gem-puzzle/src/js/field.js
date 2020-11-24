@@ -147,7 +147,7 @@ export default class Field {
     }
 
     checkWin() {
-        for (let i = 0; i < this.size; i += 1) {
+        for (let i = 0; i < this.size; i++) {
             if (this.arrTiles[i].textContent !== this.arrTiles[i].style.order) {
                 return;
             }
@@ -185,25 +185,26 @@ export default class Field {
     }
 
     shuffleTiles() {
-        for (let i = this.size - 2; i > 0; i -= 1) {
-            const j = Math.floor(Math.random() * (i + 1));
+        const withotEmptyTile = this.size - 2;
+        for (let i = withotEmptyTile; i > 0; i--) {
+            const rand = Math.floor(Math.random() * (i + 1));
             const tmp = this.arrTiles[i].style.order;
 
-            this.arrTiles[i].style.order = this.arrTiles[j].style.order;
-            this.arrTiles[j].style.order = tmp;
+            this.arrTiles[i].style.order = this.arrTiles[rand].style.order;
+            this.arrTiles[rand].style.order = tmp;
         }
 
-        if (this.IsUnsolvable()) {
+        if (this.isUnsolvable()) {
             this.shuffleTiles();
         }
     }
 
-    IsUnsolvable() {
+    isUnsolvable() {
         const orderOfTiles = this.arrTiles
             .slice()
-            .sort((a, b) => a.style.order - b.style.order);
+            .sort((value, nextValue) => value.style.order - nextValue.style.order);
         let numberOfPairs = 0;
-        for (let i = 0; i < this.size - 1; i += 1) {
+        for (let i = 0; i < this.size - 1; i++) {
             for (let j = i + 1; j < this.size - 1; j += 1) {
                 if (parseInt(orderOfTiles[i].textContent, 10) >
                     parseInt(orderOfTiles[j].textContent, 10)) {
@@ -213,20 +214,6 @@ export default class Field {
         }
 
         return (numberOfPairs % 2 !== 0);
-    }
-
-    swapLast() {
-        const orderOfTiles = this.arrTiles
-            .slice()
-            .sort((a, b) => a.style.order - b.style.order);
-
-        for (let i = 0; i < this.size - 1; i += 1) {
-            if (orderOfTiles[i].textContent === this.size.toString()) {
-                const tmp = orderOfTiles[i].style.order;
-                orderOfTiles[i].style.order = orderOfTiles[this.size - 1].style.order;
-                orderOfTiles[this.size - 1].style.order = tmp;
-            }
-        }
     }
 
     animateMoving(target, deltaX, deltaY) {
