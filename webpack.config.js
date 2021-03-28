@@ -8,75 +8,88 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const projectName = 'gem-puzzle';
 
 module.exports = {
-	experiments: {
-		asset: true,
-	},
-	entry: `./${projectName}/src/app.js`,
-	output: {
-		path: path.resolve(__dirname, `${projectName}/dist`),
-		publicPath: '',
-		filename: 'bundle.js',
-	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: `./${projectName}/src/index.html`,
-		}),
-		new MiniCssExtractPlugin({
-			filename: 'style.css',
-		}),
-		new CleanWebpackPlugin(),
-		new CopyWebpackPlugin({
-			patterns: [
-				{
-					from: path.resolve(__dirname, `${projectName}/assets/`),
-					to: path.resolve(__dirname, `${projectName}/dist`),
-					noErrorOnMissing: true,
-				},
-			],
-		}),
-	],
-	module: {
-		rules: [
-			{
-				test: /\.scss$/,
-				use: [
-					{
-						loader: MiniCssExtractPlugin.loader,
-					},
-					'css-loader',
-					'sass-loader',
-				],
-			},
-			{
-				test: /\.css$/,
-				use: ['style-loader', 'css-loader'],
-			},
-			{
-				test: /\.(png|jpg|svg)$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: '[name].[ext]',
-							outputPath: 'images',
-						},
-					},
-				],
-			},
-			{
-				test: /\.ttf$/,
-				type: 'asset/inline',
-			},
-			// {
-			// 	test: /\.js$/,
-			// 	exclude: /node_modules/,
-			// 	use: ['babel-loader', 'eslint-loader'],
-			// },
-		],
-	},
-	devServer: {
-		port: 3000,
-		open: true,
-		overlay: true,
-	},
+  experiments: {
+    asset: true,
+  },
+  entry: `./${projectName}/src/app.js`,
+  output: {
+    path: path.resolve(__dirname, `${projectName}/dist`),
+    publicPath: '',
+    filename: 'bundle.js',
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: `./${projectName}/src/index.html`,
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, `${projectName}/assets/`),
+          to: path.resolve(__dirname, `${projectName}/dist`),
+          noErrorOnMissing: true,
+        },
+      ],
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpg|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.ttf$/,
+        type: 'asset/inline',
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                {
+                  plugins: ['@babel/plugin-proposal-class-properties'],
+                },
+              ],
+            },
+          },
+          'eslint-loader',
+        ],
+      },
+    ],
+  },
+  devServer: {
+    port: 3000,
+    open: true,
+    overlay: true,
+  },
 };

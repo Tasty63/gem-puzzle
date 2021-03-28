@@ -1,3 +1,3 @@
-class Counter {
+export default class Counter {
 	constructor() {}
 }

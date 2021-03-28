@@ -1,6 +1,6 @@
-import Tile from 'Tile';
-// or isEmpty() ?
-class EmptyTile extends Tile {
+import Tile from './Tile';
+
+export default class EmptyTile extends Tile {
 	constructor() {
 		super();
 	}

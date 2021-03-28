@@ -1,11 +1,11 @@
-class Timer {
-	constructor() {}
+export default class Timer {
+  constructor() {}
 
-	start() {}
+  start() {}
 
-	stop() {}
+  stop() {}
 
-	addZero(n) {
-		return (parseInt(n, 10) < 10 ? '0' : '') + n;
-	}
+  addZero(n) {
+    return (parseInt(n, 10) < 10 ? '0' : '') + n;
+  }
 }

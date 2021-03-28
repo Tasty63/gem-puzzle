@@ -1,3 +1,3 @@
-class Menu {
+export default class Menu {
 	constructor() {}
 }

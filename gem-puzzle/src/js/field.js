@@ -1,4 +1,4 @@
-class Field {
+export default class Field {
   size3x3 = 9;
   size4x4 = 16;
   size5x5 = 25;
