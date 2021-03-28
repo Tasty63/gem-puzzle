@@ -1,17 +1,16 @@
-import Tile from './Tile';
+import defaultTile from './Tile';
 import EmptyTile from './EmptyTile';
 
 export default class TileFactory {
   static list = {
-    default: Tile,
+    default: defaultTile,
     empty: EmptyTile,
   };
 
-  constructor(parentNode) {
-    this.node = document.createElement('div');
-    this.node.className = 'puzzle__tiles';
-    parentNode.append(this.node);
-  }
+  create(number, image, type = 'default') {
+    const Tile = TileFactory.list[type] || TileFactory.list.default;
+    const tile = new Tile(number, image);
 
-  create(number, background, type = 'default') {}
+    return tile;
+  }
 }

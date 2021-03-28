@@ -1,259 +1,260 @@
 html {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 2rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
 }
 
 .puzzle {
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  &__menu {
+    width: 100%;
+    max-width: 530px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__tiles {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: #2f2a2a;
+    margin-bottom: 10vh;
+    border-radius: 1rem;
+    overflow-x: hidden;
+    grid-template-columns: repeat(auto, 1fr);
+    grid-template-rows: repeat(auto, 1fr);
+
+    @media (max-width: 1200px) {
+      margin-bottom: 0;
+    }
+
+    &_8x8 {
+      font-size: 2.5rem;
+      grid-template-columns: repeat(8, 60px);
+      grid-template-rows: repeat(8, 60px);
+    }
+
+    &_7x7 {
+      font-size: 3rem;
+      grid-template-columns: repeat(7, 69px);
+      grid-template-rows: repeat(7, 69px);
+    }
+
+    &_6x6 {
+      font-size: 3.5rem;
+      grid-template-columns: repeat(6, 81px);
+      grid-template-rows: repeat(6, 81px);
+    }
+
+    &_5x5 {
+      font-size: 4rem;
+      grid-template-columns: repeat(5, 98px);
+      grid-template-rows: repeat(5, 98px);
+    }
+
+    &_4x4 {
+      font-size: 5rem;
+      grid-template-columns: repeat(4, 124px);
+      grid-template-rows: repeat(4, 124px);
+    }
+
+    &_3x3 {
+      font-size: 8rem;
+      grid-template-columns: repeat(3, 167px);
+      grid-template-rows: repeat(3, 167px);
+    }
+  }
+
+  &__tile {
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: inherit;
+    background: #3b444d;
+    border: none;
+    font-weight: 600;
+    user-select: none;
+    outline: none;
+    transition: background-color 0.3s ease;
 
-    &__menu {
-        width: 100%;
-        max-width: 530px;
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
+    &:not(.puzzle__tile_empty):hover {
+      cursor: pointer;
+      background: #45515a;
     }
 
-    &__tiles {
-        position: relative;
-        display: grid;
-        gap: 0.5rem;
-        padding: 1rem;
-        background: #2f2a2a;
-        margin-bottom: 10vh;
-        border-radius: 1rem;
-        overflow-x: hidden;
-
-        @media (max-width: 1200px) {
-            margin-bottom: 0;
-        }
-
-        &_8x8 {
-            font-size: 2.5rem;
-            grid-template-columns: repeat(8, 60px);
-            grid-template-rows: repeat(8, 60px);
-        }
-
-        &_7x7 {
-            font-size: 3rem;
-            grid-template-columns: repeat(7, 69px);
-            grid-template-rows: repeat(7, 69px);
-        }
-
-        &_6x6 {
-            font-size: 3.5rem;
-            grid-template-columns: repeat(6, 81px);
-            grid-template-rows: repeat(6, 81px);
-        }
-
-        &_5x5 {
-            font-size: 4rem;
-            grid-template-columns: repeat(5, 98px);
-            grid-template-rows: repeat(5, 98px);
-        }
-
-        &_4x4 {
-            font-size: 5rem;
-            grid-template-columns: repeat(4, 124px);
-            grid-template-rows: repeat(4, 124px);
-        }
-
-        &_3x3 {
-            font-size: 8rem;
-            grid-template-columns: repeat(3, 167px);
-            grid-template-rows: repeat(3, 167px);
-        }
+    &_empty,
+    &_hide {
+      opacity: 0;
     }
-
-    &__tile {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        font-family: 'Open Sans', sans-serif;
-        font-size: inherit;
-        background: #3b444d;
-        border: none;
-        font-weight: 600;
-        user-select: none;
-        outline: none;
-        transition: background-color 0.3s ease;
-
-        &:not(.puzzle__tile_empty):hover {
-            cursor: pointer;
-            background: #45515a;
-        }
-
-        &_empty,
-        &_hide {
-            opacity: 0;
-        }
-    }
+  }
 }
 
 .pause {
-    display: block;
-    text-decoration: none;
-    color: #000000;
-    transition: color 0.3s ease;
+  display: block;
+  text-decoration: none;
+  color: #000000;
+  transition: color 0.3s ease;
 
-    &:hover {
-        color: #eb9902;
-        cursor: pointer;
-    }
+  &:hover {
+    color: #eb9902;
+    cursor: pointer;
+  }
 }
 
 .menuBar {
-    position: absolute;
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(100%);
-    font-size: 40px;
+  position: absolute;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(100%);
+  font-size: 4 r;
 
-    &_animated {
-        animation: appearing 0.5s ease forwards;
-    }
+  &_animated {
+    animation: appearing 0.5s ease forwards;
+  }
 
-    &_animated-reverse {
-        animation: disappearing 0.5s ease forwards;
-    }
+  &_animated-reverse {
+    animation: disappearing 0.5s ease forwards;
+  }
 }
 
 .restart-btn,
 .sound-toggle-btn,
 .close-btn {
-    text-decoration: none;
-    color: white;
-    transition: all 0.3s ease;
-    opacity: 1;
-    user-select: none;
-    margin-bottom: 1rem;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  opacity: 1;
+  user-select: none;
+  margin-bottom: 1rem;
 
-    &:hover {
-        cursor: pointer;
-        color: #ffae00;
-    }
+  &:hover {
+    cursor: pointer;
+    color: #ffae00;
+  }
 }
 
 .pop-up {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: black;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  max-width: 900px;
+  border-radius: 1.5rem;
+  font-size: 4rem;
+  width: 100%;
+  height: 70rem;
+  z-index: 20;
+  color: white;
+  transition: all 1s ease;
+  transform: scale(0);
+  transform: translate(-50%, -50%);
+
+  &_visible {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 0.9;
+  }
+
+  &__time {
+    font-size: 3rem;
+    margin-top: 5rem;
+  }
+
+  &__moves {
+    font-size: 3rem;
+  }
+
+  &__close-icon {
     position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background: black;
-    opacity: 0;
-    top: 50%;
-    left: 50%;
-    max-width: 900px;
-    border-radius: 1.5rem;
-    font-size: 4rem;
-    width: 100%;
-    height: 70rem;
-    z-index: 20;
-    color: white;
-    transition: all 1s ease;
-    transform: scale(0);
-    transform: translate(-50%, -50%);
+    display: block;
+    right: 0;
+    top: 0;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
 
-    &_visible {
-        transform: scale(1) translate(-50%, -50%);
-        opacity: 0.9;
+    &::before,
+    &::after {
+      content: '';
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      display: block;
+      width: 60%;
+      height: 4px;
+      border-radius: 2px;
+      background-color: #ffffff;
     }
 
-    &__time {
-        font-size: 3rem;
-        margin-top: 5rem;
+    &::before {
+      transform: translate(-50%, -50%) rotate(45deg);
     }
 
-    &__moves {
-        font-size: 3rem;
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
-
-    &__close-icon {
-        position: absolute;
-        display: block;
-        right: 0;
-        top: 0;
-        width: 5rem;
-        height: 5rem;
-        border-radius: 50%;
-        background-color: transparent;
-        border: none;
-        outline: none;
-        cursor: pointer;
-
-        &::before,
-        &::after {
-            content: '';
-            top: 50%;
-            left: 50%;
-            position: absolute;
-            display: block;
-            width: 60%;
-            height: 4px;
-            border-radius: 2px;
-            background-color: #ffffff;
-        }
-
-        &::before {
-            transform: translate(-50%, -50%) rotate(45deg);
-        }
-
-        &::after {
-            transform: translate(-50%, -50%) rotate(-45deg);
-        }
-    }
+  }
 }
 
 .size-option {
+  margin-bottom: 1rem;
 
-    margin-bottom: 1rem;
+  &__label {
+    color: white;
+  }
 
-    &__label {
-        color: white;
-    }
-
-    &__select {
-        font-size: 2.5rem;
-    }
+  &__select {
+    font-size: 2.5rem;
+  }
 }
 
 @keyframes appearing {
-    from {
-        background: rgba(0, 0, 0, 0);
-        transform: translateX(100%);
-    }
+  from {
+    background: rgba(0, 0, 0, 0);
+    transform: translateX(100%);
+  }
 
-    to {
-        transform: translateX(0);
-        background: rgba(0, 0, 0, 0.7);
-    }
+  to {
+    transform: translateX(0);
+    background: rgba(0, 0, 0, 0.7);
+  }
 }
 
 @keyframes disappearing {
-    from {
-        transform: translateX(0);
-        background: rgba(0, 0, 0, 0.7);
-    }
+  from {
+    transform: translateX(0);
+    background: rgba(0, 0, 0, 0.7);
+  }
 
-    to {
-        background: rgba(0, 0, 0, 0);
-        transform: translateX(100%);
-    }
+  to {
+    background: rgba(0, 0, 0, 0);
+    transform: translateX(100%);
+  }
 }
