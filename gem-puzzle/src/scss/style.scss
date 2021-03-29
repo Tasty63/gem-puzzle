@@ -24,6 +24,7 @@ body {
   }
 
   &__tiles {
+    box-sizing: border-box;
     position: relative;
     display: grid;
     gap: 0.5rem;
@@ -77,9 +78,6 @@ body {
   }
 
   &__tile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-size: inherit;
@@ -125,7 +123,7 @@ body {
   justify-content: center;
   align-items: center;
   transform: translateX(100%);
-  font-size: 4 r;
+  font-size: 4 rem;
 
   &_animated {
     animation: appearing 0.5s ease forwards;

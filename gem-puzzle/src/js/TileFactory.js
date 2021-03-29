@@ -7,9 +7,10 @@ export default class TileFactory {
     empty: EmptyTile,
   };
 
-  create(number, image, type = 'default') {
+  create(number, type = 'defualt', image) {
     const Tile = TileFactory.list[type] || TileFactory.list.default;
     const tile = new Tile(number, image);
+    /// Tile Move
 
     return tile;
   }

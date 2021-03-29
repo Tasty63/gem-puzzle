@@ -1,52 +1,99 @@
 import TileFactory from './TileFactory';
+import Constants from './Constants';
 
-const size3x3 = 9;
-const size4x4 = 16;
-const size5x5 = 25;
-const size6x6 = 36;
-const size7x7 = 49;
-const size8x8 = 64;
+const defaultSize = Constants.fieldsInfo['4x4'];
 
 export default class Puzzle {
+  // мб в конце добавить factory сюда и тут же создавать empty tile
   constructor(parentNode) {
     this.node = document.createElement('div');
+    this.puzzleTiles = [];
+    this.size = defaultSize;
+
     this.node.className = 'puzzle__tiles';
     parentNode.append(this.node);
+
+    this.node.onclick = (event) => {
+      const clickedTile = this.getClickedTile(event.target);
+      if (this.isCanBeMoved(clickedTile.order, this.emptyTile.order)) {
+        clickedTile.move();
+      }
+    };
   }
 
-  addClass(classModifier) {
-    this.node.classList.add(`puzzle__tiles_${classModifier}`);
+  addSizeModifier(size) {
+    const sizeModifier = Constants.getSizeByValue(size);
+    this.node.classList.add(`puzzle__tiles_${sizeModifier}`);
+  }
+
+  addTile(tile) {
+    this.puzzleTiles.push(tile);
+  }
+
+  getClickedTile(target) {
+    return this.puzzleTiles.find((tile) => tile.node === target);
   }
 
   launch(size) {
+    this.size = size; /// для дебага,потом убрать
     const factory = new TileFactory();
+    const emptyTileNumber = this.size;
 
-    for (let tileNumber = 1; tileNumber < size; tileNumber++) {
-      const tile = factory.create(tileNumber);
+    for (let currentTileNumber = 1; currentTileNumber < this.size; currentTileNumber++) {
+      const tile = factory.create(currentTileNumber);
+      this.addTile(tile);
       this.node.append(tile.node);
     }
+    this.emptyTile = factory.create(emptyTileNumber, 'empty');
+    this.addTile(this.emptyTile);
+    this.node.append(this.emptyTile.node);
+    this.addSizeModifier(this.size);
 
-    switch (size) {
-      case size3x3:
-        this.addClass('3x3');
-        break;
-      case size4x4:
-        this.addClass('4x4');
-        break;
-      case size5x5:
-        this.addClass('5x5');
-        break;
-      case size6x6:
-        this.addClass('6x6');
-        break;
-      case size7x7:
-        this.addClass('7x7');
-        break;
-      case size8x8:
-        this.addClass('8x8');
-        break;
-      default:
-        break;
-    }
+    // this.shuffleTiles();
   }
+
+  isCanBeMoved(tileOrder, EmptyTileOrder) {
+    // мб потом избавиться от (tileOrder - 1)
+    const fieldWidth = Math.sqrt(this.size);
+    const tilePositionX = (tileOrder - 1) % fieldWidth;
+    const tilePositionY = Math.floor((tileOrder - 1) / fieldWidth);
+    const emptyTilePositionX = (EmptyTileOrder - 1) % fieldWidth;
+    const emptyTilePositionY = Math.floor((EmptyTileOrder - 1) / fieldWidth);
+
+    const distance = Math.abs(tilePositionX - emptyTilePositionX) + Math.abs(tilePositionY - emptyTilePositionY);
+
+    return distance === 1;
+  }
+
+  // shuffleTiles() {
+  //   /// зарефакторить
+  //   const withotEmptyTile = this.size - 2;
+  //   for (let i = withotEmptyTile; i > 0; i--) {
+  //     const rand = Math.floor(Math.random() * (i + 1));
+  //     const tmp = this.puzzleTiles[i].style.order;
+
+  //     this.puzzleTiles[i].style.order = this.puzzleTiles[rand].style.order;
+  //     this.puzzleTiles[rand].style.order = tmp;
+  //   }
+
+  //   if (this.isUnsolvable()) {
+  //     this.shuffleTiles();
+  //   }
+  // }
+
+  // isUnsolvable() {
+  //   /// и это тоже
+  //   const orderOfTiles =
+  // this.puzzleTiles.slice().sort((value, nextValue) => value.style.order - nextValue.style.order);
+  //   let numberOfPairs = 0;
+  //   for (let i = 0; i < this.size - 1; i++) {
+  //     for (let j = i + 1; j < this.size - 1; j += 1) {
+  //       if (parseInt(orderOfTiles[i].textContent, 10) > parseInt(orderOfTiles[j].textContent, 10)) {
+  //         numberOfPairs += 1;
+  //       }
+  //     }
+  //   }
+
+  //   return numberOfPairs % 2 !== 0;
+  // }
 }

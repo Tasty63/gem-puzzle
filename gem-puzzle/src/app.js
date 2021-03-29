@@ -3,9 +3,9 @@ import './scss/style.scss';
 
 // import Menu from './js/Menu';
 import Puzzle from './js/Puzzle';
+import Constants from './js/Constants';
 
 const puzzleNode = document.querySelector('.puzzle');
-const size4x4 = 16;
 
 class App {
   constructor() {
@@ -13,7 +13,7 @@ class App {
   }
 
   init() {
-    this.puzzle.launch(20);
+    this.puzzle.launch(16);
   }
 }
 
