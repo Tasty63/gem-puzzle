@@ -16,14 +16,19 @@ export default class Puzzle {
     this.node.onclick = (event) => {
       const target = event.target;
       const clickedTile = this.getClickedTile(target);
-      if (clickedTile && this.isCanBeMoved(clickedTile.order, this.emptyTile.order)) {
-        const deltaX = Math.floor(clickedTile.node.offsetLeft) - Math.floor(this.emptyTile.node.offsetLeft);
 
-        const deltaY = Math.floor(clickedTile.node.offsetTop) - Math.floor(this.emptyTile.node.offsetTop);
+      if (clickedTile && this.isCanBeMoved(clickedTile)) {
+        clickedTile.move(this.emptyTile); // попытаться зарефакорить и избавиться от сет таймаута
+        this.puzzleTiles.forEach((tile) => {
+          tile.node.disabled = true;
+        });
 
-        console.log(deltaX, deltaY);
-        clickedTile.move(this.emptyTile);
-        clickedTile.animateMoving(deltaX, deltaY);
+        setTimeout(() => {
+          clickedTile.setReverseAnimation();
+          this.puzzleTiles.forEach((tile) => {
+            tile.node.disabled = false;
+          });
+        }, 0);
       }
     };
   }
@@ -59,20 +64,25 @@ export default class Puzzle {
     // this.shuffleTiles();
   }
 
-  getDistance(tileOrder, secondTileOrder) {
-    // мб потом избавиться от (tileOrder - 1)
+  getTilePosition(tile) {
     const fieldWidth = Math.sqrt(this.size);
-    const tilePositionX = (tileOrder - 1) % fieldWidth;
-    const tilePositionY = Math.floor((tileOrder - 1) / fieldWidth);
-    const secondTilePositionX = (secondTileOrder - 1) % fieldWidth;
-    const emptyTilePositionY = Math.floor((secondTileOrder - 1) / fieldWidth);
 
-    const distance = Math.abs(tilePositionX - secondTilePositionX) + Math.abs(tilePositionY - emptyTilePositionY);
-    return distance;
+    return {
+      x: (tile.order - 1) % fieldWidth,
+      y: Math.floor((tile.order - 1) / fieldWidth),
+    };
   }
 
-  isCanBeMoved(tileOrder, EmptyTileOrder) {
-    return this.getDistance(tileOrder, EmptyTileOrder) === 1;
+  getDistance(tile, secondTile) {
+    // мб потом избавиться от (tile.order - 1)
+    const tilePosition = this.getTilePosition(tile);
+    const secondTilePosition = this.getTilePosition(secondTile);
+
+    return Math.abs(tilePosition.x - secondTilePosition.x) + Math.abs(tilePosition.y - secondTilePosition.y);
+  }
+
+  isCanBeMoved(tile) {
+    return this.getDistance(tile, this.emptyTile) === 1;
   }
 
   // shuffleTiles() {
