@@ -14,9 +14,16 @@ export default class Puzzle {
     parentNode.append(this.node);
 
     this.node.onclick = (event) => {
-      const clickedTile = this.getClickedTile(event.target);
-      if (this.isCanBeMoved(clickedTile.order, this.emptyTile.order)) {
-        clickedTile.move();
+      const target = event.target;
+      const clickedTile = this.getClickedTile(target);
+      if (clickedTile && this.isCanBeMoved(clickedTile.order, this.emptyTile.order)) {
+        const deltaX = Math.floor(clickedTile.node.offsetLeft) - Math.floor(this.emptyTile.node.offsetLeft);
+
+        const deltaY = Math.floor(clickedTile.node.offsetTop) - Math.floor(this.emptyTile.node.offsetTop);
+
+        console.log(deltaX, deltaY);
+        clickedTile.move(this.emptyTile);
+        clickedTile.animateMoving(deltaX, deltaY);
       }
     };
   }
@@ -52,17 +59,20 @@ export default class Puzzle {
     // this.shuffleTiles();
   }
 
-  isCanBeMoved(tileOrder, EmptyTileOrder) {
+  getDistance(tileOrder, secondTileOrder) {
     // мб потом избавиться от (tileOrder - 1)
     const fieldWidth = Math.sqrt(this.size);
     const tilePositionX = (tileOrder - 1) % fieldWidth;
     const tilePositionY = Math.floor((tileOrder - 1) / fieldWidth);
-    const emptyTilePositionX = (EmptyTileOrder - 1) % fieldWidth;
-    const emptyTilePositionY = Math.floor((EmptyTileOrder - 1) / fieldWidth);
+    const secondTilePositionX = (secondTileOrder - 1) % fieldWidth;
+    const emptyTilePositionY = Math.floor((secondTileOrder - 1) / fieldWidth);
 
-    const distance = Math.abs(tilePositionX - emptyTilePositionX) + Math.abs(tilePositionY - emptyTilePositionY);
+    const distance = Math.abs(tilePositionX - secondTilePositionX) + Math.abs(tilePositionY - emptyTilePositionY);
+    return distance;
+  }
 
-    return distance === 1;
+  isCanBeMoved(tileOrder, EmptyTileOrder) {
+    return this.getDistance(tileOrder, EmptyTileOrder) === 1;
   }
 
   // shuffleTiles() {

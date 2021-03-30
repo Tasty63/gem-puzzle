@@ -13,6 +13,10 @@ export default class Tile {
     return this.node.style.order;
   }
 
+  set order(order) {
+    this.node.style.order = order;
+  }
+
   updateWidth() {
     this.width = this.node.offsetWidth;
   }
@@ -30,7 +34,29 @@ export default class Tile {
     // tile.style.backgroundPosition = `-${left}px -${top}px`;
   }
 
+  animateMoving(deltaX, deltaY) {}
+  // animateMoving(target, deltaX, deltaY) {
+  //   target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+  //   target.style.transition = 'transform 0s';
+
+  //   this.arrTiles.forEach((tile) => {
+  //     tile.disabled = true;
+  //   });
+
+  //   setTimeout(() => {
+  //     target.style.transform = '';
+  //     target.style.transition = 'transform 0.3s';
+  //     this.arrTiles.forEach((tile) => {
+  //       tile.disabled = false;
+  //     });
+  //   }, 0);
+  // }
+
   move(to) {
-    console.log('move move move');
+    const moveFromOrder = parseInt(this.order, 10);
+    const moveToOrder = parseInt(to.order, 10);
+
+    this.order = moveToOrder;
+    to.order = moveFromOrder;
   }
 }

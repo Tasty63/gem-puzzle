@@ -1,9 +1,9 @@
-import defaultTile from './Tile';
+import DefaultTile from './Tile';
 import EmptyTile from './EmptyTile';
 
 export default class TileFactory {
   static list = {
-    default: defaultTile,
+    default: DefaultTile,
     empty: EmptyTile,
   };
 

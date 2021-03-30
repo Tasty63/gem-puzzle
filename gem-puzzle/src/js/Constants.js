@@ -1,4 +1,5 @@
 export default class Constants {
+  /// переименовать обьект если останется без изменений
   static fieldsInfo = {
     '3x3': 9,
     '4x4': 16,

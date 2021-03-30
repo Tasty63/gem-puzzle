@@ -9,4 +9,8 @@ export default class EmptyTile {
   get order() {
     return this.node.style.order;
   }
+
+  set order(order) {
+    this.node.style.order = order;
+  }
 }
