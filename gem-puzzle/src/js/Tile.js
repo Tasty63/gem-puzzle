@@ -21,6 +21,13 @@ export default class Tile {
     this.width = this.node.offsetWidth;
   }
 
+  getDelta(tile) {
+    return {
+      x: Math.floor(this.node.offsetLeft) - Math.floor(tile.node.offsetLeft),
+      y: Math.floor(this.node.offsetTop) - Math.floor(tile.node.offsetTop),
+    };
+  }
+
   setBackground() {
     /// размеры брать из коснстант туда же можно добавить width
     this.updateWidth();
@@ -34,7 +41,16 @@ export default class Tile {
     // tile.style.backgroundPosition = `-${left}px -${top}px`;
   }
 
-  animateMoving(deltaX, deltaY) {}
+  setReverseAnimation() {
+    this.node.style.transform = '';
+    this.node.style.transition = 'transform 0.3s';
+  }
+
+  animateMoving(delta) {
+    this.node.style.transform = `translate(${delta.x}px, ${delta.y}px)`;
+    this.node.style.transition = 'transform 0s';
+  }
+
   // animateMoving(target, deltaX, deltaY) {
   //   target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
   //   target.style.transition = 'transform 0s';

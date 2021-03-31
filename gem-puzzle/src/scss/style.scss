@@ -87,6 +87,7 @@ body {
     user-select: none;
     outline: none;
     transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
 
     &:not(.puzzle__tile_empty):hover {
       cursor: pointer;

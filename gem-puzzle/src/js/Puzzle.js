@@ -23,12 +23,12 @@ export default class Puzzle {
           tile.node.disabled = true;
         });
 
-        setTimeout(() => {
-          clickedTile.setReverseAnimation();
+        this.node.ontransitionend = () => {
+          clickedTile.move(this.emptyTile);
           this.puzzleTiles.forEach((tile) => {
             tile.node.disabled = false;
           });
-        }, 0);
+        };
       }
     };
   }
