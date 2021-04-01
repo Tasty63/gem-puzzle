@@ -7,7 +7,7 @@ export default class Puzzle {
   // мб в конце добавить factory сюда и тут же создавать empty tile
   constructor(parentNode) {
     this.node = document.createElement('div');
-    this.puzzleTiles = [];
+    this.tiles = [];
     this.size = defaultSize;
 
     this.node.className = 'puzzle__tiles';
@@ -17,15 +17,16 @@ export default class Puzzle {
       const clickedTile = this.getClickedTile(event.target);
 
       if (clickedTile && this.isCanBeMoved(clickedTile)) {
+        /// вынести в функцию
         const delta = clickedTile.getDelta(this.emptyTile);
-        clickedTile.node.style.transition = 'transform 0.15s ease-out';
+        clickedTile.node.style.transition = 'transform 0.17s ease-out';
         clickedTile.node.style.transform = `translate(${delta.x}px, ${delta.y}px)`;
       }
     };
 
     this.node.ontransitionend = (event) => {
       const clickedTile = this.getClickedTile(event.target);
-      clickedTile.move(this.emptyTile);
+      clickedTile.move(this.emptyTile); // swap orders
     };
   }
 
@@ -35,11 +36,11 @@ export default class Puzzle {
   }
 
   addTile(tile) {
-    this.puzzleTiles.push(tile);
+    this.tiles.push(tile);
   }
 
   getClickedTile(target) {
-    return this.puzzleTiles.find((tile) => tile.node === target);
+    return this.tiles.find((tile) => tile.node === target);
   }
 
   launch(size) {
@@ -86,10 +87,10 @@ export default class Puzzle {
   //   const withotEmptyTile = this.size - 2;
   //   for (let i = withotEmptyTile; i > 0; i--) {
   //     const rand = Math.floor(Math.random() * (i + 1));
-  //     const tmp = this.puzzleTiles[i].style.order;
+  //     const tmp = this.tiles[i].style.order;
 
-  //     this.puzzleTiles[i].style.order = this.puzzleTiles[rand].style.order;
-  //     this.puzzleTiles[rand].style.order = tmp;
+  //     this.tiles[i].style.order = this.tiles[rand].style.order;
+  //     this.tiles[rand].style.order = tmp;
   //   }
 
   //   if (this.isUnsolvable()) {
@@ -100,7 +101,7 @@ export default class Puzzle {
   // isUnsolvable() {
   //   /// и это тоже
   //   const orderOfTiles =
-  // this.puzzleTiles.slice().sort((value, nextValue) => value.style.order - nextValue.style.order);
+  // this.tiles.slice().sort((value, nextValue) => value.style.order - nextValue.style.order);
   //   let numberOfPairs = 0;
   //   for (let i = 0; i < this.size - 1; i++) {
   //     for (let j = i + 1; j < this.size - 1; j += 1) {

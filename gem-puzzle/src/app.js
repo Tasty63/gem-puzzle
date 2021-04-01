@@ -1,20 +1,22 @@
 import './css/normalize.css';
 import './scss/style.scss';
 
-// import Menu from './js/Menu';
 import Puzzle from './js/Puzzle';
-import Constants from './js/Constants';
+import Menu from './js/Menu';
 
 const puzzleNode = document.querySelector('.puzzle');
-// TO DO animate moving, add bg
+
 class App {
   constructor() {
+    this.menu = new Menu(puzzleNode);
     this.puzzle = new Puzzle(puzzleNode);
   }
 
   init() {
     this.puzzle.launch(16);
   }
+
+  update() {}
 }
 
 const app = new App();

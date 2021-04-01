@@ -1,3 +1,13 @@
+import Counter from './Counter';
+import Timer from './Timer';
+
 export default class Menu {
-  constructor() {}
+  constructor(parentNode) {
+    this.node = document.createElement('div');
+    this.node.className = 'puzzle__menu';
+
+    this.counter = new Counter(this.node, parentNode);
+    this.node.append(this.counter.node);
+    parentNode.append(this.node);
+  }
 }
