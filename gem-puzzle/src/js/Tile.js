@@ -23,22 +23,9 @@ export default class Tile {
 
   getDelta(tile) {
     return {
-      x: Math.floor(this.node.offsetLeft) - Math.floor(tile.node.offsetLeft),
-      y: Math.floor(this.node.offsetTop) - Math.floor(tile.node.offsetTop),
+      x: Math.floor(tile.node.offsetLeft) - Math.floor(this.node.offsetLeft),
+      y: Math.floor(tile.node.offsetTop) - Math.floor(this.node.offsetTop),
     };
-  }
-
-  setBackground() {
-    /// размеры брать из коснстант туда же можно добавить width
-    this.updateWidth();
-    console.log(this.width);
-    // const size = Math.sqrt(this.size);
-    // const left = this.tileWidth * ((this.number - 1) % size);
-    // const top = this.tileWidth * Math.floor((this.number - 1) / size);
-
-    // tile.style.backgroundImage = `url('./gem-puzzle/assets/images/image${size}x${size}.jpg')`;
-    // tile.style.backgroundSize = '530px 530px';
-    // tile.style.backgroundPosition = `-${left}px -${top}px`;
   }
 
   setReverseAnimation() {
@@ -51,28 +38,31 @@ export default class Tile {
     this.node.style.transition = 'transform 0s';
   }
 
-  // animateMoving(target, deltaX, deltaY) {
-  //   target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-  //   target.style.transition = 'transform 0s';
-
-  //   this.arrTiles.forEach((tile) => {
-  //     tile.disabled = true;
-  //   });
-
-  //   setTimeout(() => {
-  //     target.style.transform = '';
-  //     target.style.transition = 'transform 0.3s';
-  //     this.arrTiles.forEach((tile) => {
-  //       tile.disabled = false;
-  //     });
-  //   }, 0);
-  // }
-
   move(to) {
     const moveFromOrder = parseInt(this.order, 10);
     const moveToOrder = parseInt(to.order, 10);
 
     this.order = moveToOrder;
     to.order = moveFromOrder;
+
+    this.node.style.transition = 'transform 0s';
+    this.node.style.transform = 'translate(0)';
   }
 }
+
+// animateMoving(target, deltaX, deltaY) {
+//   target.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+//   target.style.transition = 'transform 0s';
+
+//   this.arrTiles.forEach((tile) => {
+//     tile.disabled = true;
+//   });
+
+//   setTimeout(() => {
+//     target.style.transform = '';
+//     target.style.transition = 'transform 0.3s';
+//     this.arrTiles.forEach((tile) => {
+//       tile.disabled = false;
+//     });
+//   }, 0);
+// }

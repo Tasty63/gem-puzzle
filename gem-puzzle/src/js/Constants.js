@@ -12,4 +12,8 @@ export default class Constants {
   static getSizeByValue(value) {
     return Object.keys(this.fieldsInfo).find((key) => this.fieldsInfo[key] === value);
   }
+
+  static getDefaultSize() {
+    return this.fieldsInfo['4x4'];
+  }
 }

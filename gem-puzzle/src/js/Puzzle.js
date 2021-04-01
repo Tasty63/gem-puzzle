@@ -1,7 +1,7 @@
 import TileFactory from './TileFactory';
 import Constants from './Constants';
 
-const defaultSize = Constants.fieldsInfo['4x4'];
+const defaultSize = Constants.getDefaultSize();
 
 export default class Puzzle {
   // мб в конце добавить factory сюда и тут же создавать empty tile
@@ -14,22 +14,18 @@ export default class Puzzle {
     parentNode.append(this.node);
 
     this.node.onclick = (event) => {
-      const target = event.target;
-      const clickedTile = this.getClickedTile(target);
+      const clickedTile = this.getClickedTile(event.target);
 
       if (clickedTile && this.isCanBeMoved(clickedTile)) {
-        clickedTile.move(this.emptyTile); // попытаться зарефакорить и избавиться от сет таймаута
-        this.puzzleTiles.forEach((tile) => {
-          tile.node.disabled = true;
-        });
-
-        this.node.ontransitionend = () => {
-          clickedTile.move(this.emptyTile);
-          this.puzzleTiles.forEach((tile) => {
-            tile.node.disabled = false;
-          });
-        };
+        const delta = clickedTile.getDelta(this.emptyTile);
+        clickedTile.node.style.transition = 'transform 0.15s ease-out';
+        clickedTile.node.style.transform = `translate(${delta.x}px, ${delta.y}px)`;
       }
+    };
+
+    this.node.ontransitionend = (event) => {
+      const clickedTile = this.getClickedTile(event.target);
+      clickedTile.move(this.emptyTile);
     };
   }
 
