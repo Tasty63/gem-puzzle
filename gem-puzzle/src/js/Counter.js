@@ -5,12 +5,12 @@ export default class Counter {
     this.node.textContent = 'Moves 0';
     this.movesAmount = 0;
     // мб применить какой-то шаблон
-    rootNode.addEventListener('tileMove', this.updateCounter.bind(this));
+    rootNode.addEventListener('tileMove', this.update.bind(this));
 
     parentNode.append(this.node);
   }
 
-  updateCounter() {
+  update() {
     this.node.textContent = `Moves ${++this.movesAmount}`;
   }
 }

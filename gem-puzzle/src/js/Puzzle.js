@@ -62,6 +62,7 @@ export default class Puzzle {
   }
 
   getTilePosition(tile) {
+    // мб вынести в тайл(tile, fieldWidth)
     const fieldWidth = Math.sqrt(this.size);
 
     return {
@@ -71,7 +72,6 @@ export default class Puzzle {
   }
 
   getDistance(tile, secondTile) {
-    // мб потом избавиться от (tile.order - 1)
     const tilePosition = this.getTilePosition(tile);
     const secondTilePosition = this.getTilePosition(secondTile);
 

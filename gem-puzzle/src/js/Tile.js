@@ -17,6 +17,7 @@ export default class Tile {
   }
 
   getDelta(tile) {
+    // мб вынести в puzzle
     return {
       x: Math.floor(tile.node.offsetLeft) - Math.floor(this.node.offsetLeft),
       y: Math.floor(tile.node.offsetTop) - Math.floor(this.node.offsetTop),
