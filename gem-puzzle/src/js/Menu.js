@@ -7,7 +7,9 @@ export default class Menu {
     this.node.className = 'puzzle__menu';
     this.mediator = null;
 
-    this.counter = new Counter(this.node, parentNode);
+    this.counter = new Counter(this.node);
+    this.timer = new Timer(this.node);
+
     this.node.append(this.counter.node);
     parentNode.append(this.node);
   }
