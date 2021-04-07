@@ -1,6 +1,6 @@
-export default class GameManager {
+export default class GameMediator {
   constructor(...components) {
-    this.components = components;
+    this.components = { ...components };
 
     this.components.forEach((component) => this.addManagerToComponent(component));
   }

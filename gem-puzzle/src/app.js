@@ -3,7 +3,7 @@ import './scss/style.scss';
 
 import Puzzle from './js/Puzzle';
 import Menu from './js/Menu';
-import GameManager from './js/GameManager';
+import GameMediator from './js/GameMediator';
 
 const puzzleNode = document.querySelector('.puzzle');
 
@@ -12,7 +12,7 @@ class App {
     this.menu = new Menu(puzzleNode);
     this.puzzle = new Puzzle(puzzleNode);
 
-    this.gameManager = new GameManager(this.menu, this.puzzle);
+    this.GameMediator = new GameMediator(this.menu, this.puzzle);
   }
 
   init() {
