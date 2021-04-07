@@ -1,13 +1,19 @@
 export default class GameMediator {
-  constructor(...components) {
-    this.components = { ...components };
+  constructor(Menu, Puzzle) {
+    this.menu = Menu;
+    this.puzzle = Puzzle;
 
-    this.components.forEach((component) => this.addManagerToComponent(component));
+    this.addMediator(this.menu);
+    this.addMediator(this.puzzle);
   }
 
-  addManagerToComponent(component) {
-    component.manager = this;
+  addMediator(component) {
+    component.mediator = this;
   }
 
-  notify(sender, event) {}
+  notify(sender, event) {
+    if (event === 'moveTile') {
+      this.menu.counter.update();
+    }
+  }
 }

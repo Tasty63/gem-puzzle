@@ -9,6 +9,7 @@ export default class Puzzle {
     this.node = document.createElement('div');
     this.tiles = [];
     this.size = defaultSize;
+    this.mediator = null;
 
     this.node.className = 'puzzle__tiles';
     parentNode.append(this.node);
@@ -25,8 +26,11 @@ export default class Puzzle {
     };
 
     this.node.ontransitionend = (event) => {
+      // вынести в функцию
       const clickedTile = this.getClickedTile(event.target);
       clickedTile.move(this.emptyTile); // swap orders
+
+      this.mediator.notify(this, 'moveTile');
     };
   }
 
