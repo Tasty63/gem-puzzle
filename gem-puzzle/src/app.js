@@ -16,7 +16,7 @@ class App {
   }
 
   init() {
-    this.puzzle.launch(16);
+    this.puzzle.launch(9);
   }
 
   update() {}

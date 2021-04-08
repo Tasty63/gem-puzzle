@@ -62,7 +62,7 @@ export default class Puzzle {
     this.node.append(this.emptyTile.node);
     this.addSizeModifier(this.size);
 
-    // this.shuffleTiles();
+    this.shuffleTiles();
   }
 
   getTilePosition(tile) {
@@ -86,35 +86,34 @@ export default class Puzzle {
     return this.getDistance(tile, this.emptyTile) === 1;
   }
 
-  // shuffleTiles() {
-  //   /// зарефакторить
-  //   const withotEmptyTile = this.size - 2;
-  //   for (let i = withotEmptyTile; i > 0; i--) {
-  //     const rand = Math.floor(Math.random() * (i + 1));
-  //     const tmp = this.tiles[i].style.order;
+  shuffleTiles() {
+    const withoutEmptyTile = this.size - 2;
+    for (let i = withoutEmptyTile; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      const tileOrder = this.tiles[i].order;
 
-  //     this.tiles[i].style.order = this.tiles[rand].style.order;
-  //     this.tiles[rand].style.order = tmp;
-  //   }
+      this.tiles[i].order = this.tiles[randomIndex].order;
+      this.tiles[randomIndex].order = tileOrder;
+    }
 
-  //   if (this.isUnsolvable()) {
-  //     this.shuffleTiles();
-  //   }
-  // }
+    if (this.isUnsolvable()) {
+      console.log('unsolv');
+      this.shuffleTiles();
+    }
+  }
 
-  // isUnsolvable() {
-  //   /// и это тоже
-  //   const orderOfTiles =
-  // this.tiles.slice().sort((value, nextValue) => value.style.order - nextValue.style.order);
-  //   let numberOfPairs = 0;
-  //   for (let i = 0; i < this.size - 1; i++) {
-  //     for (let j = i + 1; j < this.size - 1; j += 1) {
-  //       if (parseInt(orderOfTiles[i].textContent, 10) > parseInt(orderOfTiles[j].textContent, 10)) {
-  //         numberOfPairs += 1;
-  //       }
-  //     }
-  //   }
+  isUnsolvable() {
+    const tilesSortedByOrder = this.tiles.slice().sort((tile, nextTile) => tile.order - nextTile.order);
 
-  //   return numberOfPairs % 2 !== 0;
-  // }
+    let numberOfPairs = 0;
+    for (let i = 0; i < this.size; ++i) {
+      for (let j = 0; j < i; ++j) {
+        if (tilesSortedByOrder[j].number > tilesSortedByOrder[i].number) {
+          numberOfPairs++;
+        }
+      }
+    }
+
+    return numberOfPairs % 2 !== 0;
+  }
 }

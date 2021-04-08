@@ -10,7 +10,6 @@ export default class TileFactory {
   create(number, type = 'defualt', image) {
     const Tile = TileFactory.list[type] || TileFactory.list.default;
     const tile = new Tile(number, image);
-    /// Tile Move
 
     return tile;
   }
