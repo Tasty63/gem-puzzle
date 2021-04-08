@@ -47,7 +47,6 @@ export default class Timer {
   }
 }
 
-function addZero(n) {
-  /// переписать на регулярку
-  return (parseInt(n, 10) < 10 ? '0' : '') + n;
+function addZero(number) {
+  return number.toString().replace(/(^[\d]{1}$)/, '0$1');
 }
