@@ -4,7 +4,6 @@ import Constants from './Constants';
 const defaultSize = Constants.getDefaultSize();
 
 export default class Puzzle {
-  // мб в конце добавить factory сюда и тут же создавать empty tile
   constructor(parentNode) {
     this.node = document.createElement('div');
     this.tiles = [];
@@ -97,15 +96,14 @@ export default class Puzzle {
     }
 
     if (this.isUnsolvable()) {
-      console.log('unsolv');
       this.shuffleTiles();
     }
   }
 
   isUnsolvable() {
     const tilesSortedByOrder = this.tiles.slice().sort((tile, nextTile) => tile.order - nextTile.order);
-
     let numberOfPairs = 0;
+
     for (let i = 0; i < this.size; ++i) {
       for (let j = 0; j < i; ++j) {
         if (tilesSortedByOrder[j].number > tilesSortedByOrder[i].number) {
