@@ -1,4 +1,3 @@
-const off = false;
 const on = true;
 
 export default class SoundButton {
@@ -8,7 +7,7 @@ export default class SoundButton {
     this.state = null;
 
     this.node.className = 'sound-toggle-btn';
-    this.audio.src = './gem-puzzle/assets/sounds/moving.mp3';
+    this.audio.src = 'sounds/moving.mp3';
 
     this.node.onclick = (event) => this.toggleSound();
 
@@ -17,7 +16,10 @@ export default class SoundButton {
   }
 
   updateState() {
-    this.state = JSON.parse(localStorage.getItem('audioState'));
+    this.state = on;
+    if (JSON.parse(localStorage.getItem('audioState')) !== null) {
+      this.state = JSON.parse(localStorage.getItem('audioState'));
+    }
     this.audio.muted = !this.state;
     this.node.textContent = this.state ? 'Sound: on' : 'Sound: off';
   }
