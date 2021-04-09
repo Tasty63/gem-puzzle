@@ -15,6 +15,7 @@ export default class GameMediator {
     if (event === 'moveTile') {
       this.menu.counter.update();
       this.menu.timer.update();
+      this.menu.soundButton.playSound();
     }
   }
 }

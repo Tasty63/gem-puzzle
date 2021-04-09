@@ -1,31 +1,36 @@
-class Sound {
-  constructor(state) {
-    this.node = document.createElement('span');
-    this.state = state;
+const off = false;
+const on = true;
+
+export default class SoundButton {
+  constructor(parentNode) {
+    this.node = document.createElement('button');
+    this.audio = document.createElement('audio');
+    this.state = null;
+
+    this.node.className = 'sound-toggle-btn';
+    this.audio.src = './gem-puzzle/assets/sounds/moving.mp3';
+
+    this.node.onclick = (event) => this.toggleSound();
+
+    this.updateState();
+    parentNode.append(this.node);
   }
 
-  handleClick() {}
+  updateState() {
+    this.state = JSON.parse(localStorage.getItem('audioState'));
+    this.audio.muted = !this.state;
+    this.node.textContent = this.state ? 'Sound: on' : 'Sound: off';
+  }
 
-  playSound() {}
+  playSound() {
+    this.audio.currentTime = 0;
+    this.audio.play();
+  }
 
-  toggleSound(soundButton) {
+  toggleSound() {
+    this.state = !this.state;
     this.audio.muted = !this.audio.muted;
-    soundButton.textContent = this.audio.muted ? 'Sound: off' : 'Sound: on';
-    localStorage.setItem('audioMuted', JSON.stringify(this.audio.muted));
+    this.node.textContent = this.state ? 'Sound: on' : 'Sound: off';
+    localStorage.setItem('audioState', JSON.stringify(this.state));
   }
 }
-
-// soundButton.classList.add('sound-toggle-btn');
-// soundButton.textContent = JSON.parse(localStorage.getItem('audioMuted'));
-// if (soundButton.textContent) {
-//   soundButton.textContent = 'Sound: off';
-// } else {
-//   soundButton.textContent = 'Sound: on';
-// }
-
-// soundButton.addEventListener('click', this.toggleSound.bind(this, soundButton));
-// this.audio = document.createElement('audio');
-// this.audio.src = './gem-puzzle/assets/sounds/moving.mp3';
-// this.audio.muted = JSON.parse(localStorage.getItem('audioMuted'));
-//  this.audio.currentTime = 0;
-//  this.audio.play();

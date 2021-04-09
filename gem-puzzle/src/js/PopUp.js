@@ -1,3 +1,3 @@
-class PopUp {
-	constructor() {}
+export default class PopUp {
+  constructor() {}
 }
