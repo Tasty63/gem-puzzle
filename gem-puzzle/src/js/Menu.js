@@ -5,6 +5,7 @@ import Select from './Select';
 
 export default class Menu {
   constructor(parentNode) {
+    this.parentNode = parentNode;
     this.mediator = null;
     this.node = document.createElement('div');
     this.bar = document.createElement('div');
@@ -21,7 +22,7 @@ export default class Menu {
     this.soundButton = new SoundButton(this.bar);
 
     this.node.append(this.button, this.bar);
-    parentNode.append(this.node);
+    this.parentNode.append(this.node);
   }
 
   // чере медиатор вызывать puzzle.launch()

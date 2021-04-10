@@ -1,10 +1,13 @@
-export default class Tile {
-  constructor(number, image) {
-    this.node = document.createElement('button');
-    this.number = number;
+import Draggable from './Draggable';
+
+export default class Tile extends Draggable {
+  constructor(node, index, image) {
+    super(node);
+    this.node = node;
+    this.number = index;
     this.image = image;
-    this.node.textContent = number;
-    this.node.style.order = number;
+    this.node.textContent = index;
+    this.node.style.order = index;
     this.node.className = 'puzzle__tile';
   }
 

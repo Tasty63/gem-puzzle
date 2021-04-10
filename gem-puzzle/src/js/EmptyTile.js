@@ -1,9 +1,11 @@
 export default class EmptyTile {
-  constructor(number) {
-    this.node = document.createElement('button');
-    this.number = number;
-    this.node.style.order = number;
+  constructor(node, index) {
+    this.node = node;
+    this.number = index;
+    this.node.style.order = index;
     this.node.classList.add('puzzle__tile_empty');
+    this.node.addEventListener('dragover', (event) => event.preventDefault());
+    this.node.addEventListener('drop', () => console.log('dropit'));
   }
 
   get order() {
@@ -14,3 +16,6 @@ export default class EmptyTile {
     this.node.style.order = order;
   }
 }
+
+// this.emptyTile.addEventListener('drop', () => this.moveTile(this.dragStartEvent));
+// this.emptyTile.addEventListener('dragover', (event) => event.preventDefault());

@@ -9,9 +9,10 @@ export default class Puzzle {
     this.tiles = [];
     this.size = defaultSize;
     this.mediator = null;
-
+    this.parentNode = parentNode;
     this.node.className = 'puzzle__tiles';
-    parentNode.append(this.node);
+    this.parentNode.append(this.node);
+    // заменить на eventLitener
 
     this.node.onclick = (event) => {
       const clickedTile = this.getClickedTile(event.target);

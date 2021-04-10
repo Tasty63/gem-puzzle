@@ -2,6 +2,7 @@ const on = true;
 
 export default class SoundButton {
   constructor(parentNode) {
+    this.parentNode = parentNode;
     this.node = document.createElement('button');
     this.audio = document.createElement('audio');
     this.state = null;
@@ -12,7 +13,7 @@ export default class SoundButton {
     this.node.onclick = (event) => this.toggleSound();
 
     this.updateState();
-    parentNode.append(this.node);
+    this.parentNode.append(this.node);
   }
 
   updateState() {

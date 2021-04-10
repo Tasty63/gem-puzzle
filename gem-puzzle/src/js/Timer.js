@@ -1,5 +1,6 @@
 export default class Timer {
   constructor(parentNode) {
+    this.parentNode = parentNode;
     this.node = document.createElement('div');
     this.node.className = 'time';
     this.node.textContent = 'Time 00:00';
@@ -8,7 +9,7 @@ export default class Timer {
     this.value = 0;
     this.isStarted = false;
 
-    parentNode.append(this.node);
+    this.parentNode.append(this.node);
   }
 
   getSeconds() {
