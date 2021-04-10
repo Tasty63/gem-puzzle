@@ -1,16 +1,16 @@
 const on = true;
 
-export default class SoundButton {
+export default class Sound {
   constructor(parentNode) {
-    this.parentNode = parentNode;
     this.node = document.createElement('button');
     this.audio = document.createElement('audio');
+    this.parentNode = parentNode;
     this.state = null;
 
     this.node.className = 'sound-toggle-btn';
     this.audio.src = 'sounds/moving.mp3';
 
-    this.node.onclick = (event) => this.toggleSound();
+    this.node.addEventListener('click', this.toggleSound.bind(this));
 
     this.updateState();
     this.parentNode.append(this.node);

@@ -16,7 +16,6 @@ export default class Puzzle {
 
     this.node.onclick = (event) => {
       const clickedTile = this.getClickedTile(event.target);
-
       if (clickedTile && this.isCanBeMoved(clickedTile)) {
         /// вынести в функцию
         const delta = clickedTile.getDelta(this.emptyTile);
@@ -25,13 +24,21 @@ export default class Puzzle {
       }
     };
 
-    this.node.ontransitionend = (event) => {
+    this.node.addEventListener('drop', (event) => {
+      const draggedTileOrder = event.dataTransfer.getData('draggedTileOrder');
+      const draggedTile = this.getTileByOrder(draggedTileOrder);
+
+      draggedTile.move(this.emptyTile);
+      this.mediator.notify(this, 'moveTile');
+    });
+
+    this.node.addEventListener('transitionend', (event) => {
       // вынести в функцию
       const clickedTile = this.getClickedTile(event.target);
       clickedTile.move(this.emptyTile); // swap orders
 
       this.mediator.notify(this, 'moveTile');
-    };
+    });
   }
 
   addSizeModifier(size) {
@@ -47,6 +54,10 @@ export default class Puzzle {
     return this.tiles.find((tile) => tile.node === target);
   }
 
+  getTileByOrder(order) {
+    return this.tiles.find((tile) => tile.order === order);
+  }
+
   launch(size) {
     this.size = size; /// для дебага,потом убрать
     const factory = new TileFactory();
@@ -58,6 +69,7 @@ export default class Puzzle {
       this.node.append(tile.node);
     }
     this.emptyTile = factory.create(emptyTileNumber, 'empty');
+
     this.addTile(this.emptyTile);
     this.node.append(this.emptyTile.node);
     this.addSizeModifier(this.size);

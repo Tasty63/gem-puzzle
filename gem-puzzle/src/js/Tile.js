@@ -1,7 +1,8 @@
 import Draggable from './Draggable';
 
 export default class Tile extends Draggable {
-  constructor(node, index, image) {
+  constructor(index, image) {
+    const node = document.createElement('button');
     super(node);
     this.node = node;
     this.number = index;
@@ -36,8 +37,5 @@ export default class Tile extends Draggable {
 
     this.node.style.transition = 'transform 0s';
     this.node.style.transform = 'translate(0)';
-
-    const event = new CustomEvent('tileMove', { bubbles: true });
-    this.node.dispatchEvent(event);
   }
 }

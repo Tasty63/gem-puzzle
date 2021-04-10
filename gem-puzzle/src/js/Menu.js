@@ -1,6 +1,6 @@
 import Counter from './Counter';
 import Timer from './Timer';
-import SoundButton from './Sound';
+import Sound from './Sound';
 import Select from './Select';
 
 export default class Menu {
@@ -19,7 +19,7 @@ export default class Menu {
 
     this.timer = new Timer(this.node);
     this.counter = new Counter(this.node);
-    this.soundButton = new SoundButton(this.bar);
+    this.soundButton = new Sound(this.bar);
 
     this.node.append(this.button, this.bar);
     this.parentNode.append(this.node);

@@ -9,8 +9,7 @@ export default class TileFactory {
 
   create(index, type = 'defualt', image) {
     const Tile = TileFactory.list[type] || TileFactory.list.default;
-    const node = document.createElement('button');
-    const tile = new Tile(node, index, image);
+    const tile = new Tile(index, image);
 
     return tile;
   }
