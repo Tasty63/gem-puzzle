@@ -13,15 +13,15 @@ export default class Timer {
   }
 
   getSeconds() {
-    return this.value % 60;
+    return addZero(this.value % 60);
   }
 
   getMinutes() {
-    return Math.floor(this.value / 60);
+    return addZero(Math.floor(this.value / 60));
   }
 
   render() {
-    this.node.textContent = `Time ${addZero(this.getMinutes())}:${addZero(this.getSeconds())}`;
+    this.node.textContent = `Time ${this.getMinutes()}:${this.getSeconds()}`;
   }
 
   tick() {

@@ -5,7 +5,7 @@ export default class Tile extends Draggable {
     const node = document.createElement('button');
     super(node);
     this.node = node;
-    this.number = index;
+    this.index = index;
     this.image = image;
     this.node.textContent = index;
     this.node.style.order = index;

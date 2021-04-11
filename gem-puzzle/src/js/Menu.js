@@ -1,6 +1,7 @@
 import Counter from './Counter';
 import Timer from './Timer';
 import Sound from './Sound';
+import NewGameButton from './NewGameButton';
 import Select from './Select';
 
 export default class Menu {
@@ -15,11 +16,12 @@ export default class Menu {
     this.button.textContent = 'Menu';
     this.node.className = 'puzzle__menu';
 
-    this.bar.className = 'menu-bar menu-bar_animated-reverse';
-
     this.timer = new Timer(this.node);
     this.counter = new Counter(this.node);
+
+    this.bar.className = 'menu-bar menu-bar_animated-reverse';
     this.soundButton = new Sound(this.bar);
+    this.newGameBtn = new NewGameButton(this.bar);
 
     this.node.append(this.button, this.bar);
     this.parentNode.append(this.node);

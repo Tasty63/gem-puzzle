@@ -30,14 +30,17 @@ export default class Puzzle {
 
       draggedTile.move(this.emptyTile);
       this.mediator.notify(this, 'moveTile');
+      this.checkWin();
     });
 
     this.node.addEventListener('transitionend', (event) => {
       // вынести в функцию
       const clickedTile = this.getClickedTile(event.target);
-      clickedTile.move(this.emptyTile); // swap orders
 
+      clickedTile.move(this.emptyTile); // swap orders
       this.mediator.notify(this, 'moveTile');
+      this.mediator.notify(this, 'win'); // дебаг
+      this.checkWin();
     });
   }
 
@@ -61,14 +64,14 @@ export default class Puzzle {
   launch(size) {
     this.size = size; /// для дебага,потом убрать
     const factory = new TileFactory();
-    const emptyTileNumber = this.size;
+    const emptyTileIndex = this.size;
 
-    for (let currentTileNumber = 1; currentTileNumber < this.size; currentTileNumber++) {
-      const tile = factory.create(currentTileNumber);
+    for (let currentTileIndex = 1; currentTileIndex < this.size; currentTileIndex++) {
+      const tile = factory.create(currentTileIndex);
       this.addTile(tile);
       this.node.append(tile.node);
     }
-    this.emptyTile = factory.create(emptyTileNumber, 'empty');
+    this.emptyTile = factory.create(emptyTileIndex, 'empty');
 
     this.addTile(this.emptyTile);
     this.node.append(this.emptyTile.node);
@@ -119,12 +122,21 @@ export default class Puzzle {
 
     for (let i = 0; i < this.size; ++i) {
       for (let j = 0; j < i; ++j) {
-        if (tilesSortedByOrder[j].number > tilesSortedByOrder[i].number) {
+        if (tilesSortedByOrder[j].index > tilesSortedByOrder[i].index) {
           numberOfPairs++;
         }
       }
     }
 
     return numberOfPairs % 2 !== 0;
+  }
+
+  checkWin() {
+    for (let i = 0; i < this.tiles.length; i++) {
+      if (parseInt(this.tiles[i].order, 10) !== this.tiles[i].index) {
+        return;
+      }
+    }
+    this.mediator.notify(this, 'win');
   }
 }

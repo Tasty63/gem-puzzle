@@ -12,4 +12,8 @@ export default class Counter {
   update() {
     this.node.textContent = `Moves ${++this.movesAmount}`;
   }
+
+  getMovesAmount() {
+    return this.movesAmount;
+  }
 }
