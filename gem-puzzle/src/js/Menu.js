@@ -8,6 +8,7 @@ export default class Menu {
   constructor(parentNode) {
     this.parentNode = parentNode;
     this.mediator = null;
+    const selectedSize = 16;
     this.node = document.createElement('div');
     this.bar = document.createElement('div');
     this.button = document.createElement('button');
@@ -21,11 +22,9 @@ export default class Menu {
 
     this.bar.className = 'menu-bar menu-bar_animated-reverse';
     this.soundButton = new Sound(this.bar);
-    this.newGameBtn = new NewGameButton(this.bar);
+    this.newGameBtn = new NewGameButton(this, this.bar, selectedSize);
 
     this.node.append(this.button, this.bar);
     this.parentNode.append(this.node);
   }
-
-  // чере медиатор вызывать puzzle.launch()
 }

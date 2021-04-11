@@ -29,6 +29,7 @@ body {
   &__tiles {
     box-sizing: border-box;
     position: relative;
+    font-family: $Roboto;
     display: grid;
     gap: 0.75rem;
     padding: 1rem;
@@ -144,6 +145,7 @@ body {
 .sound-toggle-btn,
 .close-btn {
   text-decoration: none;
+  font-family: $Rubik;
   color: white;
   background: transparent;
   border: none;
@@ -178,18 +180,18 @@ body {
   font-size: 4rem;
   z-index: 10;
   color: white;
-  transition: all 1s ease;
+  transition: transform 1s ease;
   transform: scale(0) translate(-50%, -50%);
 
   &_visible {
     transform: scale(1) translate(-50%, -50%);
     opacity: 0.9;
   }
+
   &__congratulation-text {
-    font-family: $Rubik;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 7rem;
+    font-family: $Roboto;
+    font-size: 7.5rem;
+    margin-top: 0;
     margin-bottom: 1rem;
   }
 
@@ -199,6 +201,7 @@ body {
 
   &__moves {
     font-size: 3rem;
+    margin-bottom: 1rem;
   }
 
   &__close-icon {

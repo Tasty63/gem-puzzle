@@ -10,24 +10,28 @@ export default class PopUp {
     parentNode.append(this.node);
   }
 
-  render(fieldSize) {
+  render(info) {
+    const { moves, seconds, minutes, size } = info;
+    const children = Array.from(this.node.childNodes);
+    children.forEach((child) => child.remove());
     const content = `
       <h1 class="pop-up__congratulation-text">Congratulation!</h1>
       <div class="pop-up__time">
         You solved puzzle in 
         <span class="time-counter">
-          ${this.mediator.menu.timer.getMinutes()}:${this.mediator.menu.timer.getSeconds()}
+          ${minutes}:${seconds}
         </span>
       </div>
       <div class="pop-up__moves">
         and 
         <span class="moves-counter">
-          ${this.mediator.menu.counter.getMovesAmount()}
+          ${moves}
         </span> moves
       </div>
    
     `;
-    this.newGameBtn = new NewGameButton(this.node, fieldSize);
+
+    this.newGameBtn = new NewGameButton(this, this.node, size);
     this.node.insertAdjacentHTML('afterbegin', content);
     this.node.classList.add('pop-up_visible');
   }

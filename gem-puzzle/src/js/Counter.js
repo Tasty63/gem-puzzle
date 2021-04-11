@@ -9,8 +9,18 @@ export default class Counter {
     this.parentNode.append(this.node);
   }
 
+  render() {
+    this.node.textContent = `Moves ${this.movesAmount}`;
+  }
+
   update() {
-    this.node.textContent = `Moves ${++this.movesAmount}`;
+    this.movesAmount++;
+    this.render();
+  }
+
+  reset() {
+    this.movesAmount = 0;
+    this.render();
   }
 
   getMovesAmount() {

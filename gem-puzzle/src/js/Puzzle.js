@@ -39,13 +39,14 @@ export default class Puzzle {
 
       clickedTile.move(this.emptyTile); // swap orders
       this.mediator.notify(this, 'moveTile');
-      this.mediator.notify(this, 'win'); // дебаг
+      this.mediator.notify(this, 'win');
       this.checkWin();
     });
   }
 
   addSizeModifier(size) {
     const sizeModifier = Constants.getSizeByValue(size);
+    this.node.className = 'puzzle__tiles';
     this.node.classList.add(`puzzle__tiles_${sizeModifier}`);
   }
 
@@ -62,12 +63,15 @@ export default class Puzzle {
   }
 
   launch(size) {
-    this.size = size; /// для дебага,потом убрать
+    this.tiles.forEach((tile) => tile.node.remove());
+    this.tiles = [];
+
+    this.size = size; /// для дебага,потом убрать(или нет)
     const factory = new TileFactory();
     const emptyTileIndex = this.size;
 
-    for (let currentTileIndex = 1; currentTileIndex < this.size; currentTileIndex++) {
-      const tile = factory.create(currentTileIndex);
+    for (let tileIndex = 1; tileIndex < this.size; tileIndex++) {
+      const tile = factory.create(tileIndex);
       this.addTile(tile);
       this.node.append(tile.node);
     }

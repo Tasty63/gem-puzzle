@@ -15,6 +15,3 @@ export default class EmptyTile {
     this.node.style.order = order;
   }
 }
-
-// this.emptyTile.addEventListener('drop', () => this.moveTile(this.dragStartEvent));
-// this.emptyTile.addEventListener('dragover', (event) => event.preventDefault());

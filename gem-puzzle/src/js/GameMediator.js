@@ -21,7 +21,21 @@ export default class GameMediator {
     }
 
     if (event === 'win') {
-      this.popUp.render(sender.size);
+      const info = {
+        moves: this.menu.counter.getMovesAmount(),
+        seconds: this.menu.timer.getSeconds(),
+        minutes: this.menu.timer.getMinutes(),
+        size: sender.size,
+      };
+
+      this.popUp.render(info);
+    }
+
+    if (event === 'newGame') {
+      this.popUp.node.classList.remove('pop-up_visible');
+      this.puzzle.launch(sender.size);
+      this.menu.counter.reset();
+      this.menu.timer.stop();
     }
   }
 }
