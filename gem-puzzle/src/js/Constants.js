@@ -1,6 +1,5 @@
 export default class Constants {
-  /// переименовать обьект если останется без изменений
-  static fieldsInfo = {
+  static fieldSizes = {
     '3x3': 9,
     '4x4': 16,
     '5x5': 25,
@@ -10,10 +9,14 @@ export default class Constants {
   };
 
   static getSizeByValue(value) {
-    return Object.keys(this.fieldsInfo).find((key) => this.fieldsInfo[key] === value);
+    return Object.keys(this.fieldSizes).find((key) => this.fieldSizes[key] === value);
   }
 
   static getDefaultSize() {
-    return this.fieldsInfo['4x4'];
+    return this.fieldSizes['4x4'];
+  }
+
+  static getSizes() {
+    return Object.entries(this.fieldSizes);
   }
 }

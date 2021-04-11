@@ -15,4 +15,8 @@ export default class NewGameButton {
   start() {
     this.parent.mediator.notify(this, 'newGame');
   }
+
+  settingsUpdate(fieldSize) {
+    this.size = fieldSize;
+  }
 }

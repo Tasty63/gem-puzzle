@@ -37,9 +37,8 @@ export default class Puzzle {
       // вынести в функцию
       const clickedTile = this.getClickedTile(event.target);
 
-      clickedTile.move(this.emptyTile); // swap orders
+      clickedTile.move(this.emptyTile);
       this.mediator.notify(this, 'moveTile');
-      this.mediator.notify(this, 'win');
       this.checkWin();
     });
   }
@@ -66,7 +65,7 @@ export default class Puzzle {
     this.tiles.forEach((tile) => tile.node.remove());
     this.tiles = [];
 
-    this.size = size; /// для дебага,потом убрать(или нет)
+    this.size = size || defaultSize;
     const factory = new TileFactory();
     const emptyTileIndex = this.size;
 

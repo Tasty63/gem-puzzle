@@ -20,10 +20,8 @@ class App {
   }
 
   init() {
-    this.puzzle.launch(9);
+    this.puzzle.launch();
   }
-
-  update() {}
 }
 
 const app = new App();

@@ -1,11 +1,11 @@
 export default class Timer {
   constructor(parentNode) {
     this.parentNode = parentNode;
-    this.node = document.createElement('div');
+    this.node = document.createElement('span');
     this.node.className = 'time';
     this.node.textContent = 'Time 00:00';
 
-    this.timerReference = null;
+    this.timerLink = null;
     this.value = 0;
     this.isStarted = false;
 
@@ -30,7 +30,7 @@ export default class Timer {
   }
 
   start() {
-    this.timerReference = setInterval(() => this.tick(), 1000);
+    this.timerLink = setInterval(() => this.tick(), 1000);
   }
 
   update() {
@@ -40,8 +40,12 @@ export default class Timer {
     }
   }
 
+  pause() {
+    clearInterval(this.timerLink);
+  }
+
   stop() {
-    clearInterval(this.timerReference);
+    clearInterval(this.timerLink);
     this.value = 0;
     this.render();
     this.isStarted = false;
