@@ -16,7 +16,7 @@ export default class GameMediator {
   notify(sender, event) {
     if (event === 'moveTile') {
       this.menu.counter.update();
-      this.menu.timer.update();
+      this.menu.timer.start();
       this.menu.soundButton.playSound();
     }
 
@@ -32,7 +32,8 @@ export default class GameMediator {
     }
 
     if (event === 'newGame') {
-      this.popUp.node.classList.remove('pop-up_visible');
+      this.popUp.hide();
+      this.menu.toggle();
       this.puzzle.launch(sender.size);
       this.menu.counter.reset();
       this.menu.timer.stop();

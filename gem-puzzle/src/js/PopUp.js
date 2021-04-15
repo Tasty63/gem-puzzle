@@ -33,6 +33,14 @@ export default class PopUp {
 
     this.newGameBtn = new NewGameButton(this, this.node, size);
     this.node.insertAdjacentHTML('afterbegin', content);
+    this.show();
+  }
+
+  show() {
     this.node.classList.add('pop-up_visible');
+  }
+
+  hide() {
+    this.node.classList.remove('pop-up_visible');
   }
 }

@@ -2,7 +2,7 @@ import TileFactory from './TileFactory';
 import Constants from './Constants';
 
 const defaultSize = Constants.getDefaultSize();
-
+// Todo пофиксить баг с menu и таймером + изменить анимацию бара + добавить картинки + добавить close
 export default class Puzzle {
   constructor(parentNode) {
     this.node = document.createElement('div');
@@ -12,9 +12,8 @@ export default class Puzzle {
     this.parentNode = parentNode;
     this.node.className = 'puzzle__tiles';
     this.parentNode.append(this.node);
-    // заменить на eventLitener
 
-    this.node.onclick = (event) => {
+    this.node.addEventListener('click', (event) => {
       const clickedTile = this.getClickedTile(event.target);
       if (clickedTile && this.isCanBeMoved(clickedTile)) {
         /// вынести в функцию
@@ -22,7 +21,7 @@ export default class Puzzle {
         clickedTile.node.style.transition = 'transform 0.17s ease-out';
         clickedTile.node.style.transform = `translate(${delta.x}px, ${delta.y}px)`;
       }
-    };
+    });
 
     this.node.addEventListener('drop', (event) => {
       const draggedTileOrder = event.dataTransfer.getData('draggedTileOrder');
@@ -36,9 +35,9 @@ export default class Puzzle {
     this.node.addEventListener('transitionend', (event) => {
       // вынести в функцию
       const clickedTile = this.getClickedTile(event.target);
-
       clickedTile.move(this.emptyTile);
       this.mediator.notify(this, 'moveTile');
+      // this.mediator.notify(this, 'win');
       this.checkWin();
     });
   }
@@ -124,7 +123,7 @@ export default class Puzzle {
     let numberOfPairs = 0;
 
     for (let i = 0; i < this.size; ++i) {
-      for (let j = 0; j < i; ++j) {
+      for (let j = 0; j < i; j++) {
         if (tilesSortedByOrder[j].index > tilesSortedByOrder[i].index) {
           numberOfPairs++;
         }

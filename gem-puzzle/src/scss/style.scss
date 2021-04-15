@@ -131,14 +131,14 @@ body {
   height: 54.5rem;
   z-index: 5;
   background: rgba(0, 0, 0, 0.7);
-  transform: translateX(100%);
+  transform: scale(0);
   font-size: 4 rem;
 
-  &_animated {
+  &_animated-appearing {
     animation: appearing 0.5s ease forwards;
   }
 
-  &_animated-reverse {
+  &_animated-disappearing {
     animation: disappearing 0.5s ease forwards;
   }
 
@@ -262,23 +262,23 @@ body {
 @keyframes appearing {
   from {
     background: rgba(0, 0, 0, 0);
-    transform: translateX(100%);
+    transform: scale(0);
   }
 
   to {
-    transform: translateX(0);
     background: rgba(0, 0, 0, 0.7);
+    transform: scale(1);
   }
 }
 
 @keyframes disappearing {
   from {
-    transform: translateX(0);
     background: rgba(0, 0, 0, 0.7);
+    transform: scale(1);
   }
 
   to {
     background: rgba(0, 0, 0, 0);
-    transform: translateX(100%);
+    transform: scale(0);
   }
 }
