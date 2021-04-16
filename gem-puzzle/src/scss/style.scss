@@ -10,20 +10,20 @@ body {
 }
 
 .puzzle {
-  color: $textColor;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  &__container {
+    color: $textColor;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 
   &__menu {
-    position: relative;
     box-sizing: border-box;
-    padding: 0 1rem;
     width: 100%;
-    max-width: 54.5rem;
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
@@ -122,16 +122,16 @@ body {
   top: 4rem;
   left: 0;
   width: 100%;
+  height: calc(100% - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 1.5rem;
-  height: 54.5rem;
-  z-index: 5;
   background: rgba(0, 0, 0, 0.7);
+  font-size: 4rem;
+  border-radius: 1.5rem;
+  z-index: 5;
   transform: scale(0);
-  font-size: 4 rem;
 
   &_animated-appearing {
     animation: appearing 0.5s ease forwards;
@@ -139,9 +139,6 @@ body {
 
   &_animated-disappearing {
     animation: disappearing 0.5s ease forwards;
-  }
-
-  &__container {
   }
 }
 
