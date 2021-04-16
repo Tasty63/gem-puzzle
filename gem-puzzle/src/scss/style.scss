@@ -20,9 +20,9 @@ body {
   &__menu {
     position: relative;
     box-sizing: border-box;
-    padding: 0 10px;
+    padding: 0 1rem;
     width: 100%;
-    max-width: 545px;
+    max-width: 54.5rem;
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
@@ -42,7 +42,7 @@ body {
     grid-template-columns: repeat(auto, 1fr);
     grid-template-rows: repeat(auto, 1fr);
 
-    @media (max-width: 1200px) {
+    @media (max-width: 120rem) {
       margin-bottom: 0;
     }
 
@@ -229,8 +229,8 @@ body {
       position: absolute;
       display: block;
       width: 60%;
-      height: 4px;
-      border-radius: 2px;
+      height: 0.4rem;
+      border-radius: 0.2rem;
       background-color: #ffffff;
     }
 

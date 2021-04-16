@@ -15,7 +15,6 @@ class App {
     this.menu = new Menu(puzzleNode);
     this.puzzle = new Puzzle(puzzleNode);
     this.popUp = new PopUp(puzzleNode);
-
     this.GameMediator = new GameMediator(this.menu, this.puzzle, this.popUp);
   }
 

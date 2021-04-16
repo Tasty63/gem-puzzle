@@ -1,12 +1,11 @@
 import Draggable from './Draggable';
 
 export default class Tile extends Draggable {
-  constructor(index, image) {
+  constructor(index) {
     const node = document.createElement('button');
     super(node);
     this.node = node;
     this.index = index;
-    this.image = image;
     this.node.textContent = index;
     this.node.style.order = index;
     this.node.className = 'puzzle__tile';
@@ -20,8 +19,7 @@ export default class Tile extends Draggable {
     this.node.style.order = order;
   }
 
-  getDelta(tile) {
-    // мб вынести в puzzle
+  getDeltaCoordinates(tile) {
     return {
       x: Math.floor(tile.node.offsetLeft) - Math.floor(this.node.offsetLeft),
       y: Math.floor(tile.node.offsetTop) - Math.floor(this.node.offsetTop),

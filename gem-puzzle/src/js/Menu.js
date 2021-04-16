@@ -34,15 +34,22 @@ export default class Menu {
     this.bar = document.createElement('div');
     this.bar.className = 'menu-bar';
 
+    this.closeButton = document.createElement('button');
+
     this.newGameBtn = new NewGameButton(this, this.bar);
     this.soundButton = new Sound(this.bar);
     this.select = new Select(this.bar);
+
+    this.closeButton.className = 'close-btn';
+    this.closeButton.textContent = 'Close';
+    this.closeButton.addEventListener('click', this.toggle.bind(this));
 
     this.select.node.addEventListener('change', () => {
       const chosenSize = this.select.getChosenSize();
       this.newGameBtn.update(chosenSize);
     });
 
+    this.bar.append(this.closeButton);
     this.node.append(this.bar);
   }
 
@@ -56,19 +63,12 @@ export default class Menu {
     this.bar.classList.remove('menu-bar_animated-disappearing');
   }
 
-  toggleClass() {
+  toggle() {
     if (this.bar.classList.contains('menu-bar_animated-appearing')) {
       this.hide();
-    } else {
-      this.show();
-    }
-  }
-
-  toggle() {
-    this.toggleClass();
-    if (this.bar.classList.contains('menu-bar_animated-disappearing')) {
       this.timer.start();
     } else {
+      this.show();
       this.timer.pause();
     }
   }

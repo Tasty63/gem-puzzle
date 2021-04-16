@@ -24,6 +24,7 @@ export default class Select {
       const sizeName = size[0];
       const sizeValue = size[1];
       const option = document.createElement('option');
+
       option.className = 'select-option';
       option.value = sizeValue;
       option.textContent = sizeName;
@@ -44,11 +45,3 @@ export default class Select {
     return parseInt(this.select.value, 10);
   }
 }
-
-// const closeButton = document.createElement('span');
-
-// pause.addEventListener('click', this.toggleMenu.bind(this, menuBar));
-
-// closeButton.classList.add('close-btn');
-// closeButton.textContent = 'Close';
-// closeButton.addEventListener('click', this.toggleMenu.bind(this, menuBar));

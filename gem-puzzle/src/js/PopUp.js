@@ -14,6 +14,7 @@ export default class PopUp {
     const { moves, seconds, minutes, size } = info;
     const children = Array.from(this.node.childNodes);
     children.forEach((child) => child.remove());
+
     const content = `
       <h1 class="pop-up__congratulation-text">Congratulation!</h1>
       <div class="pop-up__time">
@@ -28,7 +29,6 @@ export default class PopUp {
           ${moves}
         </span> moves
       </div>
-   
     `;
 
     this.newGameBtn = new NewGameButton(this, this.node, size);
