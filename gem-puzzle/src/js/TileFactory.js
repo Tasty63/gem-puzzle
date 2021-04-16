@@ -1,5 +1,6 @@
 import DefaultTile from './Tile';
 import EmptyTile from './EmptyTile';
+import Constants from './Constants';
 
 export default class TileFactory {
   static list = {

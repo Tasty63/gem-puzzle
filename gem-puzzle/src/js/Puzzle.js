@@ -2,7 +2,8 @@ import TileFactory from './TileFactory';
 import Constants from './Constants';
 
 const defaultSize = Constants.getDefaultSize();
-// Todo пофиксить баг с menu и таймером + изменить анимацию бара + добавить картинки + добавить close
+// пофиксить размер бара добавить close
+
 export default class Puzzle {
   constructor(parentNode) {
     this.node = document.createElement('div');
@@ -37,9 +38,22 @@ export default class Puzzle {
       const clickedTile = this.getClickedTile(event.target);
       clickedTile.move(this.emptyTile);
       this.mediator.notify(this, 'moveTile');
-      // this.mediator.notify(this, 'win');
+      this.mediator.notify(this, 'win');
       this.checkWin();
     });
+  }
+
+  setImage(tile) {
+    const sizeName = Constants.getSizeByValue(this.size);
+    const tileSize = Constants.getTileSize(sizeName);
+    const sideSize = Math.sqrt(this.size);
+    const left = tileSize * ((tile.index - 1) % sideSize);
+    const top = tileSize * Math.floor((tile.index - 1) / sideSize);
+    const puzzleSize = sideSize * tileSize;
+
+    tile.node.style.backgroundImage = `url('./gem-puzzle/assets/images/image${sizeName}.jpg')`;
+    tile.node.style.backgroundSize = `${puzzleSize}px`;
+    tile.node.style.backgroundPosition = `-${left}px -${top}px`;
   }
 
   addSizeModifier(size) {
@@ -70,6 +84,7 @@ export default class Puzzle {
 
     for (let tileIndex = 1; tileIndex < this.size; tileIndex++) {
       const tile = factory.create(tileIndex);
+      this.setImage(tile);
       this.addTile(tile);
       this.node.append(tile.node);
     }

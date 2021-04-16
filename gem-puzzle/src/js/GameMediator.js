@@ -33,7 +33,7 @@ export default class GameMediator {
 
     if (event === 'newGame') {
       this.popUp.hide();
-      this.menu.toggle();
+      this.menu.hide();
       this.puzzle.launch(sender.size);
       this.menu.counter.reset();
       this.menu.timer.stop();

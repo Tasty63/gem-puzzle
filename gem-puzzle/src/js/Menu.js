@@ -32,7 +32,7 @@ export default class Menu {
 
   renderBar() {
     this.bar = document.createElement('div');
-    this.bar.className = 'menu-bar menu-bar_animated-disappearing';
+    this.bar.className = 'menu-bar';
 
     this.newGameBtn = new NewGameButton(this, this.bar);
     this.soundButton = new Sound(this.bar);
@@ -40,15 +40,28 @@ export default class Menu {
 
     this.select.node.addEventListener('change', () => {
       const chosenSize = this.select.getChosenSize();
-      this.newGameBtn.settingsUpdate(chosenSize);
+      this.newGameBtn.update(chosenSize);
     });
 
     this.node.append(this.bar);
   }
 
+  hide() {
+    this.bar.classList.remove('menu-bar_animated-appearing');
+    this.bar.classList.add('menu-bar_animated-disappearing');
+  }
+
+  show() {
+    this.bar.classList.add('menu-bar_animated-appearing');
+    this.bar.classList.remove('menu-bar_animated-disappearing');
+  }
+
   toggleClass() {
-    this.bar.classList.toggle('menu-bar_animated-disappearing');
-    this.bar.classList.toggle('menu-bar_animated-appearing');
+    if (this.bar.classList.contains('menu-bar_animated-appearing')) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   toggle() {
