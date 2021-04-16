@@ -17,7 +17,7 @@ export default class TileFactory {
     const top = tileSize * Math.floor((tile.index - 1) / fieldWidth);
     const puzzleSize = fieldWidth * tileSize;
 
-    tile.node.style.backgroundImage = `url('./gem-puzzle/assets/images/image${sizeName}.jpg')`;
+    tile.node.style.backgroundImage = `url('images/image${sizeName}.jpg')`;
     tile.node.style.backgroundSize = `${puzzleSize}px`;
     tile.node.style.backgroundPosition = `-${left}px -${top}px`;
   }
