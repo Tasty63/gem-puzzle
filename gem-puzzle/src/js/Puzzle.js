@@ -2,7 +2,6 @@ import TileFactory from './TileFactory';
 import Constants from './Constants';
 
 const defaultSize = Constants.getDefaultSize();
-// пофиксить размер бара
 
 export default class Puzzle {
   constructor(parentNode) {

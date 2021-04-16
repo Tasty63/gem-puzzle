@@ -11,6 +11,7 @@ body {
 
 .puzzle {
   position: relative;
+  margin: 0 auto;
   &__container {
     color: $textColor;
     width: 100vw;
