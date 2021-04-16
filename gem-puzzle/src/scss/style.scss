@@ -10,6 +10,7 @@ body {
 }
 
 .puzzle {
+  color: $textColor;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -35,7 +36,7 @@ body {
     display: grid;
     gap: 0.75rem;
     padding: 1rem;
-    background: #2f2a2a;
+    background: $puzzleBgColor;
     margin-bottom: 10vh;
     border-radius: 1rem;
     overflow-x: hidden;
@@ -84,11 +85,10 @@ body {
   }
 
   &__tile {
-    color: #fff;
-    font-size: inherit;
-    background: $mainBlackColor;
-    border: none;
+    color: $tileTextColor;
+    background: $tileBgColor;
     font-weight: 600;
+    border: none;
     user-select: none;
     outline: none;
     transition: background-color 0.3s ease;
@@ -96,7 +96,6 @@ body {
 
     &:not(.puzzle__tile_empty):hover {
       cursor: pointer;
-      background: #45515a;
     }
 
     &_empty,
@@ -107,14 +106,14 @@ body {
 }
 
 .menu-btn {
-  color: #000000;
+  color: $textColor;
   background: transparent;
   border: none;
   outline: none;
   transition: color 0.3s ease;
   &:hover {
     cursor: pointer;
-    color: #3385d1;
+    color: $buttonHoverColor;
   }
 }
 
@@ -162,7 +161,7 @@ body {
 
   &:hover {
     cursor: pointer;
-    color: #3385d1;
+    color: $buttonHoverColor;
   }
 }
 
@@ -231,7 +230,7 @@ body {
       width: 60%;
       height: 0.4rem;
       border-radius: 0.2rem;
-      background-color: #ffffff;
+      background-color: white;
     }
 
     &::before {
