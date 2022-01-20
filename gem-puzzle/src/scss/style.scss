@@ -1,0 +1,279 @@
+@import './variables.scss';
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: $RobotoMono;
+  font-size: 2rem;
+}
+
+.puzzle {
+  position: relative;
+  margin: 0 auto;
+  &__container {
+    color: $textColor;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__menu {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__tiles {
+    box-sizing: border-box;
+    position: relative;
+    font-family: $Roboto;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: $puzzleBgColor;
+    margin-bottom: 10vh;
+    border-radius: 1rem;
+    overflow-x: hidden;
+    grid-template-columns: repeat(auto, 1fr);
+    grid-template-rows: repeat(auto, 1fr);
+
+    @media (max-width: 120rem) {
+      margin-bottom: 0;
+    }
+
+    &_8x8 {
+      font-size: 2.5rem;
+      grid-template-columns: repeat(8, $tileSize8x8);
+      grid-template-rows: repeat(8, $tileSize8x8);
+    }
+
+    &_7x7 {
+      font-size: 3rem;
+      grid-template-columns: repeat(7, $tileSize7x7);
+      grid-template-rows: repeat(7, $tileSize7x7);
+    }
+
+    &_6x6 {
+      font-size: 3.5rem;
+      grid-template-columns: repeat(6, $tileSize6x6);
+      grid-template-rows: repeat(6, $tileSize6x6);
+    }
+
+    &_5x5 {
+      font-size: 4rem;
+      grid-template-columns: repeat(5, $tileSize5x5);
+      grid-template-rows: repeat(5, $tileSize5x5);
+    }
+
+    &_4x4 {
+      font-size: 5rem;
+      grid-template-columns: repeat(4, $tileSize4x4);
+      grid-template-rows: repeat(4, $tileSize4x4);
+    }
+
+    &_3x3 {
+      font-size: 8rem;
+      grid-template-columns: repeat(3, $tileSize3x3);
+      grid-template-rows: repeat(3, $tileSize3x3);
+    }
+  }
+
+  &__tile {
+    color: $tileTextColor;
+    background: $tileBgColor;
+    font-weight: 600;
+    border: none;
+    user-select: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
+
+    &:not(.puzzle__tile_empty):hover {
+      cursor: pointer;
+    }
+
+    &_empty,
+    &_hide {
+      opacity: 0.01;
+    }
+  }
+}
+
+.menu-btn {
+  color: $textColor;
+  background: transparent;
+  border: none;
+  outline: none;
+  transition: color 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    color: $buttonHoverColor;
+  }
+}
+
+.menu-bar {
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 4rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 4rem;
+  border-radius: 1.5rem;
+  z-index: 5;
+  transform: scale(0);
+
+  &_animated-appearing {
+    animation: appearing 0.5s ease forwards;
+  }
+
+  &_animated-disappearing {
+    animation: disappearing 0.5s ease forwards;
+  }
+}
+
+.restart-btn,
+.sound-toggle-btn,
+.close-btn {
+  text-decoration: none;
+  font-family: $Rubik;
+  font-size: 4rem;
+  color: white;
+  background: transparent;
+  border: none;
+  transition: color 0.3s ease;
+  user-select: none;
+  outline: none;
+  margin-bottom: 1rem;
+
+  &:hover {
+    cursor: pointer;
+    color: $buttonHoverColor;
+  }
+}
+
+.pop-up {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: black;
+  transform-origin: top left;
+  top: 50%;
+  left: 50%;
+  border-radius: 1.5rem;
+  font-size: 4rem;
+  z-index: 10;
+  color: white;
+  transition: transform 1s ease-out;
+  transform: scale(0) translate(-50%, -50%);
+
+  &_visible {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 0.9;
+  }
+
+  &__congratulation-text {
+    font-family: $Roboto;
+    font-size: 7.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  &__time {
+    font-size: 3rem;
+  }
+
+  &__moves {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  &__close-icon {
+    position: absolute;
+    display: block;
+    right: 0;
+    top: 0;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: '';
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      display: block;
+      width: 60%;
+      height: 0.4rem;
+      border-radius: 0.2rem;
+      background-color: white;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
+
+.size-option {
+  margin-bottom: 1rem;
+  &__label {
+    font-family: $Rubik;
+    font-size: 4rem;
+    margin-right: 1rem;
+    color: white;
+  }
+
+  &__select {
+    font-size: 2.5rem;
+  }
+}
+
+@keyframes appearing {
+  from {
+    background: rgba(0, 0, 0, 0);
+    transform: scale(0);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1);
+  }
+}
+
+@keyframes disappearing {
+  from {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0);
+    transform: scale(0);
+  }
+}
